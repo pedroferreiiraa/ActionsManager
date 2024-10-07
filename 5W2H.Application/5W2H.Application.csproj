@@ -2,9 +2,13 @@
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
-        <RootNamespace>_5W2H.Applications</RootNamespace>
+        <RootNamespace>_5W2H.Application</RootNamespace>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\5W2H.Core\5W2H.Core.csproj" />
+    </ItemGroup>
 
 </Project>

@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "5W2H.Core", "5W2H.Core\5W2H
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "5W2H.Infrastructure", "5W2H.Infrastructure\5W2H.Infrastructure.csproj", "{AA20FF0F-8E9B-4A16-BAA9-34719A26AA58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "5W2H.Applications", "5W2H.Applications\5W2H.Applications.csproj", "{057F29C2-3FD3-4726-BBBB-AFE43A239C04}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "5W2H.Application", "5W2H.Application\5W2H.Application.csproj", "{62E66E5F-913A-4480-8820-0D008DA1B258}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,9 +26,9 @@ Global
 		{AA20FF0F-8E9B-4A16-BAA9-34719A26AA58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA20FF0F-8E9B-4A16-BAA9-34719A26AA58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA20FF0F-8E9B-4A16-BAA9-34719A26AA58}.Release|Any CPU.Build.0 = Release|Any CPU
-		{057F29C2-3FD3-4726-BBBB-AFE43A239C04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{057F29C2-3FD3-4726-BBBB-AFE43A239C04}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{057F29C2-3FD3-4726-BBBB-AFE43A239C04}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{057F29C2-3FD3-4726-BBBB-AFE43A239C04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62E66E5F-913A-4480-8820-0D008DA1B258}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62E66E5F-913A-4480-8820-0D008DA1B258}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62E66E5F-913A-4480-8820-0D008DA1B258}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62E66E5F-913A-4480-8820-0D008DA1B258}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

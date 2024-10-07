@@ -11,4 +11,17 @@
       <ProjectReference Include="..\5W2H.Core\5W2H.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="MediatR" Version="12.4.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="DepartmentCommands\" />
+      <Folder Include="DepartmentQueries\" />
+      <Folder Include="ProjectCommands\" />
+      <Folder Include="ProjectQueries\" />
+      <Folder Include="UserCommands\" />
+      <Folder Include="UsersQueries\" />
+    </ItemGroup>
+
 </Project>

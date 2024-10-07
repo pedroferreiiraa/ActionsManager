@@ -4,7 +4,10 @@ namespace _5W2H.Core;
 
 public class Project : BaseEntity
 {
+    protected Project() {}
+    
     public Project(string title, string what, string why, DateTime when, string where, string who, string how, decimal howMuch)
+        : base()
     {
         Title = title;
         What = what;

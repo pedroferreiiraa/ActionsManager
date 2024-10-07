@@ -1,5 +1,6 @@
-using System.Data.Common;
+
 using _5W2H.Core;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
@@ -44,26 +45,20 @@ public class WhoDbContext : DbContext
         builder
             .Entity<Project>(e =>
             {
-                e.HasKey(e => e.Id);
-                
+                e.HasKey(p => p.Id);
+            
                 e.HasOne(p => p.User)
-                    .WithMany(c => c.OwnedProjects)
-                    .HasForeignKey(p => p.Id)
+                    .WithMany(u => u.Projects) // Mantemos apenas uma navegação aqui
+                    .HasForeignKey(p => p.IdUser) // Corrigido para referenciar IdUser
                     .OnDelete(DeleteBehavior.Restrict);
-                    
             });
 
         builder.Entity<Department>(e =>
         {
             e.HasKey(e => e.Id);
-            
         });
-
+        base.OnModelCreating(builder);
+        
     }
-    
-    
-    
-    
-    
     
 }

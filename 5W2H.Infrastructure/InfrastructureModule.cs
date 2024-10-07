@@ -1,34 +1,40 @@
+using _5W2H.Core.Repositories;
+using _5W2H.Infrastructure.Persistence;
+using _5W2H.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace _5W2H.Infrastructure;
 
-public class InfrastructureModule
+public static class InfrastructureModule 
 {
-    private static IServiceCollection AddData(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("DevFreelaCs");   
-  
-
-
-        // Check if the environment is development and use InMemoryDb
-        if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
-        {
-            services.AddDbContext<YourDbContext>(options =>
-            {
-                options.UseInMemoryDatabase("DevFreelaDb");
-            });
-        }
-        else
-        {
-            // Use SQL Server connection string in production or other environments
-            services.AddDbContext<YourDbContext>(options =>
-            {
-                options.UseSqlServer(connectionString);
-            });
-        }
+        services
+            .AddRepositories()
+            .AddData(configuration);
 
         return services;
     }
 
+    private static IServiceCollection AddData(this IServiceCollection services, IConfiguration configuration)
+    {
+        // var connectionString = configuration.GetConnectionString("DefaultConnection");
+        services.AddDbContext<WhoDbContext>(o => o.UseInMemoryDatabase("InMemoryDatabase"));
+        return services;
+    }
+
+    private static IServiceCollection AddRepositories(this IServiceCollection services)
+    {
+
+        services.AddScoped<IProjectRepository, ProjectRepository>();
+        // services.AddScoped<IUserRepository, UserRepository>();
+        // services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+
+        return services;
+
+    }
+    
+    
 }

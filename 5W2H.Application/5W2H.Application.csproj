@@ -9,19 +9,24 @@
 
     <ItemGroup>
       <ProjectReference Include="..\5W2H.Core\5W2H.Core.csproj" />
+      <ProjectReference Include="..\5W2H.Infrastructure\5W2H.Infrastructure.csproj" />
+
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="MediatR" Version="12.4.1" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.8" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="DepartmentCommands\" />
       <Folder Include="DepartmentQueries\" />
-      <Folder Include="ProjectCommands\" />
-      <Folder Include="ProjectQueries\" />
       <Folder Include="UserCommands\" />
       <Folder Include="UsersQueries\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Models\CreateProjectInputModel.cs" />
     </ItemGroup>
 
 </Project>

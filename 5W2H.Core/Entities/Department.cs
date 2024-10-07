@@ -2,6 +2,7 @@ namespace _5W2H.Core;
 
 public class Department : BaseEntity
 {
+    public Department() {}
     public Department(int id, string description, List<User> users)
     {
         Id = id;

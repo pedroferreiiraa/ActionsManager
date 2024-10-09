@@ -1,12 +1,15 @@
 using _5W2H.Core.Enums;
 
-namespace _5W2H.Core;
+namespace _5W2H.Core.Entities;
 
 public class Project : BaseEntity
 {
-    protected Project() {}
+    protected Project(ProjectStatusEnum status)
+    {
+        this.Status = status;
+    }
     
-    public Project(string title, string what, string why, DateTime when, string where, string who, string how, decimal howMuch)
+    public Project(string title, string what, string why, DateTime when, string where, string who, string how, decimal howMuch, ProjectStatusEnum status, string origin, DateTime dateOrigin)
         : base()
     {
         Title = title;
@@ -17,9 +20,12 @@ public class Project : BaseEntity
         Who = who;
         How = how;
         HowMuch = howMuch;
+        Status = status;
+        Origin = origin;
+        OriginDate = dateOrigin;
     }
 
-    public int Id { get; private set; }
+    
     public string Title { get; private set; }
     public string What { get; private set; }
     public string Why { get; private set; }
@@ -29,6 +35,8 @@ public class Project : BaseEntity
     public string How { get; private set; }
     public decimal HowMuch { get; private set; }
     
+    public ProjectStatusEnum Status { get; private set; }
+    
     public Guid IdUser { get; private set; }
     
     public User User { get; private set; }
@@ -36,7 +44,9 @@ public class Project : BaseEntity
     public DateTime? CreatedAt { get; private set; }
     public DateTime? StartedAt { get; private set; }
     public DateTime? CompletedAt { get; private set; }
-    public ProjectStatusEnum Status { get; private set; }
+    
+    public string Origin { get; private set; }
+    public DateTime? OriginDate { get; private set; }
 
     public void Cancel()
     {

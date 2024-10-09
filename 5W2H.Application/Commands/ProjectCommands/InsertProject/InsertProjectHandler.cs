@@ -1,10 +1,8 @@
-
 using _5W2H.Application.Models;
 using _5W2H.Core.Repositories;
-using _5W2H.Infrastructure.Persistence;
 using MediatR;
 
-namespace _5W2H.Application.ProjectCommands.InsertProject;
+namespace _5W2H.Application.Commands.ProjectCommands.InsertProject;
 
 public class InsertProjectHandler : IRequestHandler<InsertProjectCommand, ResultViewModel<int>>
 {
@@ -21,7 +19,7 @@ public class InsertProjectHandler : IRequestHandler<InsertProjectCommand, Result
     {
         var project =  request.ToEntity();
 
-        await _repository.Add(project);
+        await _repository.AddAsync(project);
         
         return ResultViewModel<int>.Success(project.Id);
     }

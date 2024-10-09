@@ -1,6 +1,6 @@
 using _5W2H.Core.Enums;
 
-namespace _5W2H.Core;
+namespace _5W2H.Core.Entities;
 
 public class User : BaseEntity
 {

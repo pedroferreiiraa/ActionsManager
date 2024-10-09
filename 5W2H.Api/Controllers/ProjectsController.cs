@@ -1,6 +1,8 @@
-using _5W2H.Application.ProjectCommands.InsertProject;
-using _5W2H.Application.ProjectQueries.GetAllProjects;
-using _5W2H.Application.ProjectQueries.GetProjectById;
+using _5W2H.Application.Commands.ProjectCommands.CompleteProject;
+using _5W2H.Application.Commands.ProjectCommands.InsertProject;
+using _5W2H.Application.Commands.ProjectCommands.StartProject;
+using _5W2H.Application.Queries.ProjectQueries.GetAllProjects;
+using _5W2H.Application.Queries.ProjectQueries.GetProjectById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -42,7 +44,6 @@ public class ProjectsController : ControllerBase
     
     
     
-    
     [HttpPost]
     public async Task<IActionResult> Post(InsertProjectCommand command)
     {
@@ -50,6 +51,23 @@ public class ProjectsController : ControllerBase
     
         return CreatedAtAction(nameof(GetById), new { id = result.Data }, command);
     }
-    
+
+    [HttpPut("{id}/start")]
+    public async Task<IActionResult> Start(int id)
+    {
+        var command = new StartProjectCommand(id);
+        await _mediator.Send(command);
+        return NoContent();
+    }
+
+    [HttpPut("{id}/complete")]
+    public async Task<IActionResult> Complete(int id)
+    {
+        var command = new CompleteProjectCommand(id);
+        
+        await _mediator.Send(command);
+        
+        return NoContent();
+    }
     
 }

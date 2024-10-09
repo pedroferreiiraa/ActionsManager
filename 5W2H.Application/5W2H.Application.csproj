@@ -19,10 +19,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="DepartmentCommands\" />
-      <Folder Include="DepartmentQueries\" />
-      <Folder Include="UserCommands\" />
-      <Folder Include="UsersQueries\" />
+      <Folder Include="Commands\DepartmentCommands\" />
+      <Folder Include="Commands\UserCommands\" />
+      <Folder Include="Queries\DepartmentQueries\" />
+      <Folder Include="Queries\UsersQueries\" />
     </ItemGroup>
 
     <ItemGroup>

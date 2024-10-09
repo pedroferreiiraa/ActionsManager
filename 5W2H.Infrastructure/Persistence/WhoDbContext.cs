@@ -1,6 +1,6 @@
 
 using _5W2H.Core;
-
+using _5W2H.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 

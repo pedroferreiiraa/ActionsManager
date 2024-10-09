@@ -1,6 +1,6 @@
 using _5W2H.Core.Repositories;
 using _5W2H.Infrastructure.Persistence;
-using _5W2H.Infrastructure.Repositories;
+using _5W2H.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,4 +1,4 @@
-namespace _5W2H.Core;
+namespace _5W2H.Core.Entities;
 
 public abstract class BaseEntity
 {

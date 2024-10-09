@@ -1,4 +1,4 @@
-using _5W2H.Application.ProjectCommands.InsertProject;
+using _5W2H.Application.Commands.ProjectCommands.InsertProject;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace _5W2H.Application;

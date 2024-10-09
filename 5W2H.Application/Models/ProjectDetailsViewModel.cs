@@ -1,10 +1,12 @@
 using _5W2H.Core;
+using _5W2H.Core.Entities;
+using _5W2H.Core.Enums;
 
 namespace _5W2H.Application.Models;
 
-public class ProjectItemViewModel
+public class ProjectDetailsViewModel
 {
-    public ProjectItemViewModel(int id, string title, string what, string why, DateTime when, string where, string who, string how, decimal howMuch)
+    public ProjectDetailsViewModel(int id, string title, string what, string why, DateTime when, string where, string who, string how, decimal howMuch, ProjectStatusEnum status)
     {
         Id = id;
         Title = title;
@@ -15,6 +17,7 @@ public class ProjectItemViewModel
         Who = who;
         How = how;
         HowMuch = howMuch;
+        Status = status;
     }
 
     public int Id { get; private set; }
@@ -27,6 +30,8 @@ public class ProjectItemViewModel
     public string How { get; private set; }
     public decimal HowMuch { get; private set; }
     
-    public static ProjectItemViewModel FromEntity(Project project) 
-        => new (project.Id, project.Title, project.What, project.Why, project.When, project.Where, project.Who, project.How, project.HowMuch);
+    public ProjectStatusEnum Status { get; private set; }
+    
+    public static ProjectDetailsViewModel FromEntity(Project project) 
+        => new (project.Id, project.Title, project.What, project.Why, project.When, project.Where, project.Who, project.How, project.HowMuch, project.Status);
 }

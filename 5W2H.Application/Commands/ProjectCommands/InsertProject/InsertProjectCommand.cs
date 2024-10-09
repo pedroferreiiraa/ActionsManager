@@ -19,7 +19,8 @@ public class InsertProjectCommand : IRequest<ResultViewModel<int>>
     public string Origin { get;  set; }
     public DateTime OriginDate { get;  set; }
     public ProjectStatusEnum Status { get; set; }
+    public string ConclusionText { get;  set; }
     
     public Project ToEntity() 
-        => new(Title, What, Why, When, Where, Who, How, HowMuch,  Status, Origin, OriginDate);
+        => new(Title, What, Why, When, Where, Who, How, HowMuch,  Status, Origin, OriginDate, ConclusionText);
 }

@@ -3,7 +3,7 @@ using MediatR;
 
 namespace _5W2H.Application.Queries.ProjectQueries.GetProjectById;
 
-public class GetProjectByIdQuery :IRequest<ResultViewModel<ProjectViewModel>>
+public class GetProjectByIdQuery :IRequest<ResultViewModel<ProjectDetailsViewModel>>
 {
     public GetProjectByIdQuery(int id)
     {

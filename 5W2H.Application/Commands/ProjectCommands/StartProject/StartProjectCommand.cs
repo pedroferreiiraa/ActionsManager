@@ -4,7 +4,7 @@ using MediatR;
 
 namespace _5W2H.Application.Commands.ProjectCommands.StartProject;
 
-public class StartProjectCommand : IRequest<StartProjectViewModel>
+public class StartProjectCommand : IRequest<ResultViewModel<Project>>
 {
     public StartProjectCommand(int id)
     {

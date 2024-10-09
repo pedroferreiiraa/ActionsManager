@@ -4,12 +4,10 @@ namespace _5W2H.Core.Entities;
 
 public class Project : BaseEntity
 {
-    protected Project(ProjectStatusEnum status)
-    {
-        this.Status = status;
-    }
     
-    public Project(string title, string what, string why, DateTime when, string where, string who, string how, decimal howMuch, ProjectStatusEnum status, string origin, DateTime dateOrigin)
+
+    public Project(string title, string what, string why, DateTime when, string where, string who, string how,
+        decimal howMuch, ProjectStatusEnum status, string origin, DateTime dateOrigin, string conclusionText)
         : base()
     {
         Title = title;
@@ -23,6 +21,7 @@ public class Project : BaseEntity
         Status = status;
         Origin = origin;
         OriginDate = dateOrigin;
+        ConclusionText = conclusionText;
     }
 
     
@@ -46,7 +45,9 @@ public class Project : BaseEntity
     public DateTime? CompletedAt { get; private set; }
     
     public string Origin { get; private set; }
-    public DateTime? OriginDate { get; private set; }
+    public DateTime OriginDate { get; private set; }
+    
+    public string ConclusionText { get; private set; }
 
     public void Cancel()
     {
@@ -74,7 +75,7 @@ public class Project : BaseEntity
         }
     }
 
-    public void Update(string title, string what, string why, DateTime when, string where, string who, string how, decimal howmuch)
+    public void Update(string title, string what, string why, DateTime when, string where, string who, string how, decimal howmuch, string origin, DateTime dateOrigin, string conclusionText)
     {
         Title = title;
         What = what;
@@ -84,6 +85,9 @@ public class Project : BaseEntity
         Who = who;
         How = how;
         HowMuch = howmuch;
+        Origin = origin;
+        OriginDate = dateOrigin;
+        ConclusionText = conclusionText;
     }
     
 }

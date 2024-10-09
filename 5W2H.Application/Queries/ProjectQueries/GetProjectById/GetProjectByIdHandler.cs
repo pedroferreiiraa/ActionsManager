@@ -4,7 +4,7 @@ using MediatR;
 
 namespace _5W2H.Application.Queries.ProjectQueries.GetProjectById;
 
-public class GetProjectByIdHandler : IRequestHandler<GetProjectByIdQuery, ResultViewModel<ProjectViewModel>>
+public class GetProjectByIdHandler : IRequestHandler<GetProjectByIdQuery, ResultViewModel<ProjectDetailsViewModel>>
 {
     private readonly IProjectRepository _repository;
 
@@ -14,12 +14,12 @@ public class GetProjectByIdHandler : IRequestHandler<GetProjectByIdQuery, Result
     }
     
     
-    public async Task<ResultViewModel<ProjectViewModel>> Handle(GetProjectByIdQuery request, CancellationToken cancellationToken)
+    public async Task<ResultViewModel<ProjectDetailsViewModel>> Handle(GetProjectByIdQuery request, CancellationToken cancellationToken)
     {
         var project = await _repository.GetByIdAsync(request.Id);
 
-        var model = ProjectViewModel.FromEntity(project);
+        var model = ProjectDetailsViewModel.FromEntity(project);
 
-        return ResultViewModel<ProjectViewModel>.Success(model);
+        return ResultViewModel<ProjectDetailsViewModel>.Success(model);
     }
 }

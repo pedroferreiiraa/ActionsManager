@@ -1,10 +1,11 @@
 using _5W2H.Application.Models;
+using _5W2H.Core.Entities;
 using _5W2H.Core.Repositories;
 using MediatR;
 
 namespace _5W2H.Application.Commands.ProjectCommands.CompleteProject;
 
-public class CompleteProjectHandler : IRequestHandler<CompleteProjectCommand, CompleteProjectViewModel>
+public class CompleteProjectHandler : IRequestHandler<CompleteProjectCommand, ResultViewModel<Project>>
 {
     private readonly IProjectRepository _projectRepository;
 
@@ -13,28 +14,20 @@ public class CompleteProjectHandler : IRequestHandler<CompleteProjectCommand, Co
         _projectRepository = projectRepository;
     }
     
-    public async Task<CompleteProjectViewModel> Handle(CompleteProjectCommand request, CancellationToken cancellationToken)
+    public async Task<ResultViewModel<Project>> Handle(CompleteProjectCommand request, CancellationToken cancellationToken)
     {
         var existingProject = await _projectRepository.GetByIdAsync(request.Id);
 
         if (existingProject == null)
         {
-            return new CompleteProjectViewModel
-            {
-                Success = false,
-                Message = "Projeto não encontrado. "
-            };
             
+            return ResultViewModel<Project>.Error("Projeto não encontrado.");
         }
+
         existingProject.Complete();
 
         await _projectRepository.SaveChangesAsync();
 
-        return new CompleteProjectViewModel
-        {
-            Success = true,
-            Message = "Projeto concluído com sucesso. ",
-            Project = existingProject
-        };
+        return ResultViewModel<Project>.Success(existingProject);
     }
 }

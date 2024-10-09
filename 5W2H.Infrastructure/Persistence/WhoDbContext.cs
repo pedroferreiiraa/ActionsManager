@@ -27,7 +27,7 @@ public class WhoDbContext : DbContext
     
     public DbSet<User> Users { get; set; }   
     public DbSet<Project> Projects { get; set; }
-    public DbSet<Department> Departments { get; set; }
+    
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -53,10 +53,7 @@ public class WhoDbContext : DbContext
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
-        builder.Entity<Department>(e =>
-        {
-            e.HasKey(e => e.Id);
-        });
+       
         base.OnModelCreating(builder);
         
     }

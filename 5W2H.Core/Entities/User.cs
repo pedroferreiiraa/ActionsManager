@@ -4,36 +4,30 @@ namespace _5W2H.Core.Entities;
 
 public class User : BaseEntity
 {
-    public User(string fullName, string jobRole, RoleEnums role, bool active, List<Project> projects, List<Project> ownedProjects)
+    public User(int id, string fullName, string email, bool active, string password, RoleEnums role, List<Project> projects, List<Project> ownedProjects, DateTime createdAt)
     {
+        
         FullName = fullName;
-        JobRole = jobRole;
-        Role = role;
+        Email = email;
         Active = active;
-        
-        
-        Projects = [];
-
+        Password = password;
+        Role = role;
+        Projects = projects;
+        OwnedProjects = ownedProjects;
+        CreatedAt = createdAt;
     }
 
-    public User()
-    {
-        
-    }
     
 
-
-    public Guid Id { get; private set; } = new Guid();
     public string FullName { get; private set; }
-    public string JobRole { get; private set; }
-    
+    public string Email { get; private set; }
+    public bool Active { get; set; }
+    public string Password { get; private set; }
     public RoleEnums Role  { get; private set; }
-
-    
-    public bool Active { get; private set; } = true;
     
     public List<Project> Projects { get; private set; }
     public List<Project> OwnedProjects { get; private set; }
+    public DateTime CreatedAt { get; private set; }
     
     
 }

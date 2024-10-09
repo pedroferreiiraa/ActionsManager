@@ -1,3 +1,5 @@
+using MediatR;
+
 namespace _5W2H.Application.Models;
 
 public class ResultViewModel
@@ -18,7 +20,7 @@ public class ResultViewModel
         => new(false, message);
 }
 
-public class ResultViewModel<T> : ResultViewModel
+public class ResultViewModel<T> : ResultViewModel, IRequest
 {
     public ResultViewModel(T? data, bool isSuccess = true, string message = "")
         : base(isSuccess, message)

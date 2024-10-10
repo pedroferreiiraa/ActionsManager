@@ -7,7 +7,7 @@ public class Project : BaseEntity
     
 
     public Project(string title, string what, string why, DateTime when, string where, string who, string how,
-        decimal howMuch, ProjectStatusEnum status, string origin, DateTime dateOrigin, string conclusionText)
+        decimal howMuch, ProjectStatusEnum status, string origin, DateTime originDate, string conclusionText)
         : base()
     {
         Title = title;
@@ -20,7 +20,7 @@ public class Project : BaseEntity
         HowMuch = howMuch;
         Status = status;
         Origin = origin;
-        OriginDate = dateOrigin;
+        OriginDate = originDate;
         ConclusionText = conclusionText;
     }
 
@@ -36,7 +36,7 @@ public class Project : BaseEntity
     
     public ProjectStatusEnum Status { get; private set; }
     
-    public Guid IdUser { get; private set; }
+    public int IdUser { get; private set; }
     
     public User User { get; private set; }
     

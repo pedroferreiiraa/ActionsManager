@@ -18,7 +18,7 @@ public class InsertUserHandler : IRequestHandler<InsertUserCommand, int>
     {
         var user = request.ToEntity();
         await _userRepository.AddAsync(user);
-        await _userRepository.SaveChangesAsync(user);
+        await _userRepository.SaveChangesAsync();
 
         return user.Id;
 

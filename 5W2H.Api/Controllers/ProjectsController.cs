@@ -25,7 +25,6 @@ public class ProjectsController : ControllerBase
     public async Task<IActionResult> Get(string search = "")
     {
         var query = new GetAllProjectsQuery();
-
         var result = await _mediator.Send(query);
 
         return Ok(result);
@@ -35,12 +34,6 @@ public class ProjectsController : ControllerBase
     public async Task<IActionResult> GetById(int id)
     {
         var result = await _mediator.Send(new GetProjectByIdQuery(id));
-    
-        if (!result.IsSuccess)
-        {
-            return BadRequest(result.Message);
-        }
-    
         return Ok(result);
     }
     
@@ -50,7 +43,6 @@ public class ProjectsController : ControllerBase
     public async Task<IActionResult> Post(InsertProjectCommand command)
     {
         var result = await _mediator.Send(command);
-    
         return CreatedAtAction(nameof(GetById), new { id = result.Data }, command);
     }
 
@@ -62,30 +54,23 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpPut("{id}/start")]
-    public async Task<IActionResult> Start(int id)
+    public async Task<IActionResult> Start(StartProjectCommand command)
     {
-        var command = new StartProjectCommand(id);
         await _mediator.Send(command);
         return NoContent();
     }
 
     [HttpPut("{id}/complete")]
-    public async Task<IActionResult> Complete(int id)
-    {
-        var command = new CompleteProjectCommand(id);
-        
+    public async Task<IActionResult> Complete(CompleteProjectCommand command)
+    {        
         await _mediator.Send(command);
-        
         return NoContent();
     }
 
     [HttpDelete("{id}/delete")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(DeleteProjectCommand command)
     {
-        var command = new DeleteProjectCommand(id);
-        
         await _mediator.Send(command);
-        
         return NoContent();
     }
     

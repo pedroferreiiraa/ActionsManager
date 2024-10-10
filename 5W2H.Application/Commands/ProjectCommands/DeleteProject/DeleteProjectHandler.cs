@@ -19,11 +19,6 @@ public class DeleteProjectHandler : IRequestHandler<DeleteProjectCommand, Result
     {
         var existingProject = await _projectRepository.GetByIdAsync(request.Id);
 
-        if (existingProject == null)
-        {
-            return ResultViewModel<Project>.Error("Projeto não encontrado");
-        }
-        
         existingProject.Cancel();
         
         await _projectRepository.SaveChangesAsync();

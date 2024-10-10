@@ -22,6 +22,6 @@ public class GetUserQueryHandler : IRequestHandler<GetUserQuery, UserViewModel>
             return null;
         }
 
-        return new UserViewModel(user.FullName, user.Email);
+        return new UserViewModel(user);
     }
 }

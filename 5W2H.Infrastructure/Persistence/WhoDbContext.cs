@@ -36,21 +36,15 @@ public class WhoDbContext : DbContext
             {
                 e.HasKey(u => u.Id);
 
-                e.HasMany(u => u.Projects)
-                    .WithOne(us => us.User)
-                    .HasForeignKey(us => us.IdUser)
-                    .OnDelete(DeleteBehavior.Restrict);
             });
 
         builder
             .Entity<Project>(e =>
             {
                 e.HasKey(p => p.Id);
-            
-                e.HasOne(p => p.User)
-                    .WithMany(u => u.Projects) // Mantemos apenas uma navegação aqui
-                    .HasForeignKey(p => p.IdUser) // Corrigido para referenciar IdUser
-                    .OnDelete(DeleteBehavior.Restrict);
+
+                e.HasOne(p => p.User);
+
             });
 
        

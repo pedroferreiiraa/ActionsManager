@@ -53,7 +53,7 @@ public class ProjectRepository : IProjectRepository
     public async Task Delete(int id)
     {
         var project =  _context.Projects.SingleOrDefault(p => p.Id == id);
-        project?.SetAsDeleted();
+        project.SetAsDeleted();
         await _context.SaveChangesAsync();
     }
 

@@ -1,13 +1,16 @@
 using _5W2H.Application.Commands.UserCommands.DeleteUser;
 using _5W2H.Application.Commands.UserCommands.InsertUser;
+using _5W2H.Application.Commands.UserCommands.LoginUser;
 using _5W2H.Application.Commands.UserCommands.UpdateUser;
 using _5W2H.Application.Queries.UsersQueries.GetAllUsers;
-using _5W2H.Application.Queries.UsersQueries.GetUser;
+using _5W2H.Application.Queries.UsersQueries.GetUserById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace _5W2H.Api.Controllers;
 
+[ApiController]
 [Route("api/users")]
 public class UsersController : ControllerBase
 {
@@ -79,7 +82,19 @@ public class UsersController : ControllerBase
         var user = _mediator.Send(command);
         return NoContent();
     }
-    
+
+    [HttpPut("login")]
+    public async Task<IActionResult> Login([FromBody] LoginUserCommand command)
+    {
+        var loginUserViewModel = await _mediator.Send(command);
+
+        if (loginUserViewModel == null)
+        {
+            return BadRequest();
+        }
+        
+        return Ok(loginUserViewModel);
+    }
     
     
 }

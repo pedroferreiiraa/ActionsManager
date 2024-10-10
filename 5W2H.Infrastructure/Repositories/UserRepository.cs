@@ -1,8 +1,9 @@
 using _5W2H.Core.Entities;
 using _5W2H.Core.Repositories;
+using _5W2H.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace _5W2H.Infrastructure.Persistence.Repositories;
+namespace _5W2H.Infrastructure.Repositories;
 
 public class UserRepository : IUserRepository
 {
@@ -19,9 +20,11 @@ public class UserRepository : IUserRepository
         
     }
 
-    public Task<User> GetUserByEmailAndPassword(string email, string passwordHash)
+    public async Task<User> GetUserByEmailAndPassword(string email, string passwordHash)
     {
-        throw new NotImplementedException();
+        return await _context
+            .Users
+            .SingleOrDefaultAsync(u => u.Email == email && u.Password == passwordHash);
     }
 
     public async Task<User> AddAsync(User user)

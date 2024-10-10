@@ -2,7 +2,7 @@ using _5W2H.Application.Models;
 using _5W2H.Core.Repositories;
 using MediatR;
 
-namespace _5W2H.Application.Queries.UsersQueries.GetUser;
+namespace _5W2H.Application.Queries.UsersQueries.GetUserById;
 
 public class GetUserQueryHandler : IRequestHandler<GetUserQuery, UserViewModel>
 {

@@ -1,6 +1,8 @@
 using _5W2H.Core.Repositories;
+using _5W2H.Core.Services;
+using _5W2H.Infrastructure.AuthServices;
 using _5W2H.Infrastructure.Persistence;
-using _5W2H.Infrastructure.Persistence.Repositories;
+using _5W2H.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,11 +32,12 @@ public static class InfrastructureModule
 
         services.AddScoped<IProjectRepository, ProjectRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
-        // services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+        services.AddScoped<IAuthService, AuthService>();
+    
 
         return services;
 
     }
-    
+
     
 }

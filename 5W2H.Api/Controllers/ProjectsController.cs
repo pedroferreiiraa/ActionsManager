@@ -6,12 +6,14 @@ using _5W2H.Application.Commands.ProjectCommands.UpdateProject;
 using _5W2H.Application.Queries.ProjectQueries.GetAllProjects;
 using _5W2H.Application.Queries.ProjectQueries.GetProjectById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace _5W2H.Api.Controllers;
 
 [ApiController]
 [Route("/api/projects")]
+[Authorize]
 public class ProjectsController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -22,6 +24,7 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "Manager, Leader")]
     public async Task<IActionResult> Get(string search = "")
     {
         var query = new GetAllProjectsQuery();

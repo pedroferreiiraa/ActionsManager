@@ -24,7 +24,6 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = "Manager, Leader")]
     public async Task<IActionResult> Get(string search = "")
     {
         var query = new GetAllProjectsQuery();

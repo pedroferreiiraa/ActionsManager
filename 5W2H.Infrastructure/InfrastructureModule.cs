@@ -22,7 +22,8 @@ public static class InfrastructureModule
 
     private static IServiceCollection AddData(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("DefaultConnection");
+        var connectionString = configuration.GetConnectionString("PostgreSQL");
+        Console.WriteLine($"ConnectionString: {connectionString}"); // Adicione esta linha
         services.AddDbContext<WhoDbContext>(o => o.UseNpgsql(connectionString));
         return services;
     }
@@ -33,6 +34,7 @@ public static class InfrastructureModule
         services.AddScoped<IProjectRepository, ProjectRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IAuthService, AuthService>();
+
     
 
         return services;

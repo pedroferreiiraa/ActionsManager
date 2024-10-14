@@ -6,8 +6,8 @@ public class Project : BaseEntity
 {
     
 
-    public Project(string title, string what, string why, DateTime when, string where, string who, string how,
-        decimal howMuch, ProjectStatusEnum status, string origin, DateTime originDate, string conclusionText)
+    public Project(string title, string what, string why, string when, string where, string who, string how,
+        decimal howMuch, ProjectStatusEnum status, string origin, string originDate, string conclusionText)
         : base()
     {
         Title = title;
@@ -28,15 +28,13 @@ public class Project : BaseEntity
     public string Title { get; private set; }
     public string What { get; private set; }
     public string Why { get; private set; }
-    public DateTime When { get; private set; }
+    public string When { get; private set; }
     public string Where { get; private set; }
     public string Who { get; private set; }
     public string How { get; private set; }
     public decimal HowMuch { get; private set; }
     
     public ProjectStatusEnum Status { get; private set; }
-    
-    public int IdUser { get; private set; }
     
     public User User { get; private set; }
     
@@ -45,7 +43,7 @@ public class Project : BaseEntity
     public DateTime? CompletedAt { get; private set; }
     
     public string Origin { get; private set; }
-    public DateTime OriginDate { get; private set; }
+    public string OriginDate { get; private set; }
     
     public string ConclusionText { get; private set; }
 
@@ -62,7 +60,7 @@ public class Project : BaseEntity
         if (Status == ProjectStatusEnum.Created)
         {
             Status = ProjectStatusEnum.InProgress;
-            StartedAt = DateTime.Now;
+            StartedAt = DateTime.UtcNow;
         }
     }
 
@@ -71,11 +69,11 @@ public class Project : BaseEntity
         if (Status == ProjectStatusEnum.InProgress)
         {
             Status = ProjectStatusEnum.Completed;
-            CompletedAt = DateTime.Now;
+            CompletedAt = DateTime.UtcNow;
         }
     }
 
-    public void Update(string title, string what, string why, DateTime when, string where, string who, string how, decimal howmuch, string origin, DateTime dateOrigin, string conclusionText)
+    public void Update(string title, string what, string why, string when, string where, string who, string how, decimal howmuch, string origin, string dateOrigin, string conclusionText)
     {
         Title = title;
         What = what;

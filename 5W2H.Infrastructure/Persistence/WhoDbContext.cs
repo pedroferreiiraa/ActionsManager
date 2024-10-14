@@ -14,9 +14,15 @@ public class WhoDbContext : DbContext
     {
         public WhoDbContext CreateDbContext(string[] args)
         {
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+
             var optionsBuilder = new DbContextOptionsBuilder<WhoDbContext>();
-            optionsBuilder.UseNpgsql("Host=localhost;Database=ferramentagestao;Username=admin;Password=135798");
-            
+            var connectionString = configuration.GetConnectionString("PostgreSQL");
+            optionsBuilder.UseNpgsql(connectionString);
+
             return new WhoDbContext(optionsBuilder.Options);
         }
     }
@@ -37,20 +43,17 @@ public class WhoDbContext : DbContext
         builder.Entity<User>(e =>
         {
             e.HasKey(u => u.Id); // Primary key
+            
         });
 
         // Configuração da entidade Project
         builder.Entity<Project>(e =>
         {
             e.HasKey(p => p.Id); // Primary key
-
-            e.HasOne(p => p.User);
+           
         });
 
-
-       
         base.OnModelCreating(builder);
-        
     }
     
 }

@@ -15,9 +15,9 @@ public class GetAllUsersHandler : IRequestHandler<GetAllUsersQuery, ResultViewMo
     
     public async Task<ResultViewModel<List<UserViewModel>>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
     {
-        var users = await _userRepository.GetAllAsync(); // Presumindo que retorna List<User>
+        var users = await _userRepository.GetAllAsync(); 
 
-        if (users == null || !users.Any()) // Verifique se a lista está vazia
+        if (users == null || !users.Any()) 
         {
             return ResultViewModel<List<UserViewModel>>.Error("Nenhum usuário encontrado.");
         }

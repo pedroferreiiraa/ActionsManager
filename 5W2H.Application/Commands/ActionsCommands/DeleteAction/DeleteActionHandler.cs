@@ -17,11 +17,16 @@ public class DeleteActionHandler : IRequestHandler<DeleteActionCommand, ResultVi
     
     public async Task<ResultViewModel<Action>> Handle(DeleteActionCommand request, CancellationToken cancellationToken)
     {
-        var existingProject = await _actionRepository.GetByIdAsync(request.Id);
+        var existingAction = await _actionRepository.GetByIdAsync(request.Id);
 
-        existingProject.Cancel();
+        if (existingAction == null)
+        {
+            return ResultViewModel<Action>.Error("Action not found");
+        }
+        
+        existingAction.Cancel();
         
         await _actionRepository.SaveChangesAsync();
-        return ResultViewModel<Action>.Success(existingProject);
+        return ResultViewModel<Action>.Success(existingAction);
     }
 }

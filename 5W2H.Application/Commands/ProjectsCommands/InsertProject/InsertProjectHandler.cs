@@ -6,18 +6,18 @@ namespace _5W2H.Application.Commands.ProjectsCommands.InsertProject;
 
 public class InsertProjectHandler : IRequestHandler<InsertProjectCommand, ResultViewModel<int>>
 {
-    private readonly IProjectRepository _repository;
+    private readonly IProjectRepository _projectRepository;
 
-    public InsertProjectHandler(IProjectRepository repository)
+    public InsertProjectHandler(IProjectRepository projectRepository)
     {
-        _repository = repository;
+        _projectRepository = projectRepository;
     }
     
     public async Task<ResultViewModel<int>> Handle(InsertProjectCommand request, CancellationToken cancellationToken)
     {
         var project = request.ToEntity();
         
-        await _repository.AddAsync(project);
+        await _projectRepository.AddAsync(project);
         
         return new ResultViewModel<int>(project.Id);
         

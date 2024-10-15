@@ -15,18 +15,18 @@ public class UpdateActionHandler : IRequestHandler<UpdateActionCommand, ResultVi
     
     public async Task<ResultViewModel<Action>> Handle(UpdateActionCommand request, CancellationToken cancellationToken)
     {
-        var existingProject = await _actionRepository.GetByIdAsync(request.Id);
+        var existingAction = await _actionRepository.GetByIdAsync(request.Id);
         
-        if (existingProject == null)
+        if (existingAction == null)
         {
             
             return ResultViewModel<Action>.Error("Projeto não encontrado.");
         }
-        existingProject.Update(request.Title, request.What, request.Why, request.When, request.Where, request.Who, request.How, request.HowMuch, request.Origin, request.OriginDate, request.ConclusionText);
+        existingAction.Update(request.Title, request.What, request.Why, request.When, request.Where, request.Who, request.How, request.HowMuch, request.Origin, request.OriginDate, request.ConclusionText);
         
         await _actionRepository.SaveChangesAsync();
 
-        return ResultViewModel<Action>.Success(existingProject);
+        return ResultViewModel<Action>.Success(existingAction);
         
     }
 }

@@ -4,6 +4,7 @@ namespace _5W2H.Core.Entities;
 
 public class Project : BaseEntity
 {
+    public Project() {}
     
     public Project(string title, int projectNumber, int userId, ProjectStatusEnum status, string originDate)
     {
@@ -15,21 +16,18 @@ public class Project : BaseEntity
 
         Actions = new List<Action>();
     }
-
-    
-
     public string Title { get; private set; }
     public int ProjectNumber { get; private set; }
     public ProjectStatusEnum Status { get; private set; }
     public int UserId { get; private set; }
-    
     public string OriginDate { get; private set; }
     
     public DateTime? CreatedAt { get; private set; }
     public DateTime? StartedAt { get; private set; }
     public DateTime? CompletedAt { get; private set; }
     public List<Action> Actions { get; set; }
-    
+
+
     public void Cancel()
     {
         if (Status == ProjectStatusEnum.InProgress || Status == ProjectStatusEnum.Suspended)

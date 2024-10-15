@@ -19,8 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Queries\DepartmentQueries\" />
-      <Folder Include="Queries\ProjectQueries\" />
+      <Folder Include="Queries\ProjectQueries\GetProjectById\" />
     </ItemGroup>
 
     <ItemGroup>

@@ -16,18 +16,18 @@ public class StartActionHandler : IRequestHandler<StartActionCommand, ResultView
     
     public async Task<ResultViewModel<Action>> Handle(StartActionCommand request, CancellationToken cancellationToken)
     {
-        var existingProject = await _actionRepository.GetByIdAsync(request.Id);
+        var existingAction = await _actionRepository.GetByIdAsync(request.Id);
 
-        if (existingProject == null)
+        if (existingAction == null)
         {
             
             return ResultViewModel<Action>.Error("Projeto não encontrado.");
         }
         
-        existingProject.Start();
+        existingAction.Start();
 
         await _actionRepository.SaveChangesAsync();
 
-        return ResultViewModel<Action>.Success(existingProject);
+        return ResultViewModel<Action>.Success(existingAction);
     }
 }

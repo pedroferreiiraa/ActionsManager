@@ -16,18 +16,18 @@ public class CompleteActiontHandler : IRequestHandler<CompleteActionCommand, Res
     
     public async Task<ResultViewModel<Action>> Handle(CompleteActionCommand request, CancellationToken cancellationToken)
     {
-        var existingProject = await _actionRepository.GetByIdAsync(request.Id);
+        var existingAction = await _actionRepository.GetByIdAsync(request.Id);
 
-        if (existingProject == null)
+        if (existingAction == null)
         {
             
             return ResultViewModel<Action>.Error("Projeto não encontrado.");
         }
 
-        existingProject.Complete();
+        existingAction.Complete();
 
         await _actionRepository.SaveChangesAsync();
 
-        return ResultViewModel<Action>.Success(existingProject);
+        return ResultViewModel<Action>.Success(existingAction);
     }
 }

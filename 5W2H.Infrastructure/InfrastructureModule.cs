@@ -23,7 +23,6 @@ public static class InfrastructureModule
     private static IServiceCollection AddData(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("PostgreSQL");
-        Console.WriteLine($"ConnectionString: {connectionString}"); // Adicione esta linha
         services.AddDbContext<WhoDbContext>(o => o.UseNpgsql(connectionString));
         return services;
     }

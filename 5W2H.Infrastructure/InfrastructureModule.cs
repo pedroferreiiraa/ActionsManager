@@ -31,8 +31,10 @@ public static class InfrastructureModule
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
 
-        services.AddScoped<IProjectRepository, ProjectRepository>();
+        services.AddScoped<IActionRepository, ActionRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IProjectRepository, ProjectRepository>();
+        services.AddScoped<IDepartmentRepository, DepartmentRepository>();
         services.AddScoped<IAuthService, AuthService>();
 
     

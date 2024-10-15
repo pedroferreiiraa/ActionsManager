@@ -2,42 +2,44 @@ using _5W2H.Core.Entities;
 using _5W2H.Core.Repositories;
 using _5W2H.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-
+using Action = _5W2H.Core.Entities.Action;
 
 namespace _5W2H.Infrastructure.Repositories;
 
-public class ProjectRepository : IProjectRepository
+public class ActionRepository : IActionRepository
 {
     private readonly WhoDbContext _context;
     
-    public ProjectRepository(WhoDbContext context)
+    public ActionRepository(WhoDbContext context)
     {
         _context = context;
     }
     
-    public async Task<List<Project>> GetAllAsync()
+    public async Task<List<Action>> GetAllAsync()
     {
-        var projects = await _context.Projects.ToListAsync();
-        return projects.Select(p => (Project)p).ToList(); // Supondo que Project herde de Action ou que você tenha uma conversão
+        var projects = await _context.Actions.ToListAsync();
+        return projects.Select(p => (Action)p).ToList(); // Supondo que Project herde de Action ou que você tenha uma conversão
     }
 
-    public async Task<Project> GetByIdAsync(int id)
+  
+
+    public async Task<Action> GetByIdAsync(int id)
     {
-        return await _context.Projects
+        return await _context.Actions
             .SingleOrDefaultAsync(p => p.Id == id) ?? throw new InvalidOperationException();
     }
 
-    public async Task<int> AddAsync(Project project)
+    public async Task<int> AddAsync(Action action)
     {
-        await _context.Projects.AddAsync(project);
+        await _context.Actions.AddAsync(action);
         await _context.SaveChangesAsync(); 
-        return project.Id;
+        return action.Id;
     }
     
 
-    public async Task Update(Project project)
+    public async Task Update(Action action)
     {
-        _context.Projects.Update(project);
+        _context.Actions.Update(action);
         await _context.SaveChangesAsync();
     }
 
@@ -53,14 +55,14 @@ public class ProjectRepository : IProjectRepository
 
     public async Task Delete(int id)
     {
-        var project =  _context.Projects.SingleOrDefault(p => p.Id == id);
-        project.SetAsDeleted();
+        var action =  _context.Actions.SingleOrDefault(p => p.Id == id);
+        action.SetAsDeleted();
         await _context.SaveChangesAsync();
     }
 
-    public async Task<Project> StartAsync(Project project)
+    public async Task<Action> StartAsync(Action action)
     {
-        var existingProjectAction = await _context.Projects.SingleOrDefaultAsync(p => p.Id == project.Id);
+        var existingProjectAction = await _context.Actions.SingleOrDefaultAsync(p => p.Id == action.Id);
         if (existingProjectAction == null)
         {
             return null;
@@ -74,5 +76,4 @@ public class ProjectRepository : IProjectRepository
 
         
     }
-    
 }

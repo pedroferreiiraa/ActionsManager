@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using _5W2H.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using _5W2H.Infrastructure.Persistence;
 namespace _5W2H.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(WhoDbContext))]
-    partial class WhoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241015161835_PrimeiraMigration")]
+    partial class PrimeiraMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,7 +61,7 @@ namespace _5W2H.Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("ProjectId")
+                    b.Property<int?>("ProjectId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("StartedAt")
@@ -72,6 +75,9 @@ namespace _5W2H.Infrastructure.Persistence.Migrations
                         .HasColumnType("text");
 
                     b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserId1")
                         .HasColumnType("integer");
 
                     b.Property<string>("What")
@@ -100,6 +106,8 @@ namespace _5W2H.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
+                    b.HasIndex("UserId1");
+
                     b.ToTable("Actions");
                 });
 
@@ -111,15 +119,8 @@ namespace _5W2H.Infrastructure.Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Name")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -137,15 +138,15 @@ namespace _5W2H.Infrastructure.Persistence.Migrations
                     b.Property<DateTime?>("CompletedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("ConclusionText")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
-
-                    b.Property<string>("OriginDate")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<int>("ProjectNumber")
                         .HasColumnType("integer");
@@ -163,9 +164,14 @@ namespace _5W2H.Infrastructure.Persistence.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("UserId1")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Projects");
                 });
@@ -212,19 +218,21 @@ namespace _5W2H.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("_5W2H.Core.Entities.Action", b =>
                 {
-                    b.HasOne("_5W2H.Core.Entities.Project", "Project")
-                        .WithMany("Actions")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("_5W2H.Core.Entities.Project", null)
+                        .WithMany()
+                        .HasForeignKey("ProjectId");
 
-                    b.HasOne("_5W2H.Core.Entities.User", "User")
-                        .WithMany("Actions")
+                    b.HasOne("_5W2H.Core.Entities.User", null)
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Project");
+                    b.HasOne("_5W2H.Core.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -232,10 +240,14 @@ namespace _5W2H.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("_5W2H.Core.Entities.Project", b =>
                 {
                     b.HasOne("_5W2H.Core.Entities.User", null)
-                        .WithMany("Projects")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("_5W2H.Core.Entities.User", null)
+                        .WithMany("Projects")
+                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("_5W2H.Core.Entities.User", b =>
@@ -254,15 +266,8 @@ namespace _5W2H.Infrastructure.Persistence.Migrations
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("_5W2H.Core.Entities.Project", b =>
-                {
-                    b.Navigation("Actions");
-                });
-
             modelBuilder.Entity("_5W2H.Core.Entities.User", b =>
                 {
-                    b.Navigation("Actions");
-
                     b.Navigation("Projects");
                 });
 #pragma warning restore 612, 618

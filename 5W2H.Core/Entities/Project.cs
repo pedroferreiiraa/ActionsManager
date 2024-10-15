@@ -5,48 +5,31 @@ namespace _5W2H.Core.Entities;
 public class Project : BaseEntity
 {
     
-
-    public Project(string title, string what, string why, string when, string where, string who, string how,
-        decimal howMuch, ProjectStatusEnum status, string origin, string originDate, string conclusionText)
-        : base()
+    public Project(string title, int projectNumber, int userId, ProjectStatusEnum status, string originDate)
     {
         Title = title;
-        What = what;
-        Why = why;
-        When = when;
-        Where = where;
-        Who = who;
-        How = how;
-        HowMuch = howMuch;
+        ProjectNumber = projectNumber;
+        UserId = userId;
         Status = status;
-        Origin = origin;
         OriginDate = originDate;
-        ConclusionText = conclusionText;
+
+        Actions = new List<Action>();
     }
 
     
+
     public string Title { get; private set; }
-    public string What { get; private set; }
-    public string Why { get; private set; }
-    public string When { get; private set; }
-    public string Where { get; private set; }
-    public string Who { get; private set; }
-    public string How { get; private set; }
-    public decimal HowMuch { get; private set; }
-    
+    public int ProjectNumber { get; private set; }
     public ProjectStatusEnum Status { get; private set; }
+    public int UserId { get; private set; }
     
-    public User User { get; private set; }
+    public string OriginDate { get; private set; }
     
     public DateTime? CreatedAt { get; private set; }
     public DateTime? StartedAt { get; private set; }
     public DateTime? CompletedAt { get; private set; }
+    public List<Action> Actions { get; set; }
     
-    public string Origin { get; private set; }
-    public string OriginDate { get; private set; }
-    
-    public string ConclusionText { get; private set; }
-
     public void Cancel()
     {
         if (Status == ProjectStatusEnum.InProgress || Status == ProjectStatusEnum.Suspended)
@@ -73,19 +56,22 @@ public class Project : BaseEntity
         }
     }
 
-    public void Update(string title, string what, string why, string when, string where, string who, string how, decimal howmuch, string origin, string dateOrigin, string conclusionText)
+    public void Update(string title, int projectNumber, string originDate)
     {
         Title = title;
-        What = what;
-        Why = why;
-        When = when;
-        Where = where;
-        Who = who;
-        How = how;
-        HowMuch = howmuch;
-        Origin = origin;
-        OriginDate = dateOrigin;
-        ConclusionText = conclusionText;
+        ProjectNumber = projectNumber;
+        OriginDate = originDate;
     }
     
+    public void AddAction(Action action)
+    {
+        Actions.Add(action);
+        // Você pode definir a propriedade ProjectId da ação se necessário
+        action.ProjectId = this.Id; // Ou o que for apropriado
+    }
+
+    public void RemoveAction(Action action)
+    {
+        Actions.Remove(action);
+    }
 }

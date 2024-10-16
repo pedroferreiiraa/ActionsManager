@@ -16,9 +16,9 @@ public class GetActionByIdHandler : IRequestHandler<GetActionByIdQuery, ResultVi
     
     public async Task<ResultViewModel<ActionDetailsViewModel>> Handle(GetActionByIdQuery request, CancellationToken cancellationToken)
     {
-        var project = await _repository.GetByIdAsync(request.Id);
+        var action = await _repository.GetByIdAsync(request.Id);
 
-        var model = ActionDetailsViewModel.FromEntity(project);
+        var model = ActionDetailsViewModel.FromEntity(action);
 
         return ResultViewModel<ActionDetailsViewModel>.Success(model);
     }

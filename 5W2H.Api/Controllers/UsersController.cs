@@ -79,7 +79,7 @@ public class UsersController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(DeleteUserCommand command)
     {
-        var user = _mediator.Send(command);
+        await _mediator.Send(command);
         return NoContent();
     }
 

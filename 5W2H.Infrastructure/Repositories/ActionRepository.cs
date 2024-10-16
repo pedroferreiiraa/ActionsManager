@@ -25,7 +25,7 @@ public class ActionRepository : IActionRepository
     public async Task<Acao> GetByIdAsync(int id)
     {
         return await _context.Acoes
-            .SingleOrDefaultAsync(p => p.Id == id) ?? throw new InvalidOperationException();
+            .SingleOrDefaultAsync(u => u.Id == id && !u.IsDeleted);
     }
 
     public async Task<int> AddAsync(Acao acao)
@@ -52,11 +52,20 @@ public class ActionRepository : IActionRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task Delete(int id)
+    public async Task<int> DeleteAsync(int id)
     {
-        var action =  _context.Acoes.SingleOrDefault(p => p.Id == id);
+        var action = await _context.Acoes.SingleOrDefaultAsync(p => p.Id == id);
+    
+        if (action == null)
+            throw new InvalidOperationException("Ação não encontrado");
+
         action.SetAsDeleted();
+    
+        _context.Acoes.Update(action); 
+    
         await _context.SaveChangesAsync();
+    
+        return action.Id;  
     }
 
     public async Task<Acao> StartAsync(Acao acao)

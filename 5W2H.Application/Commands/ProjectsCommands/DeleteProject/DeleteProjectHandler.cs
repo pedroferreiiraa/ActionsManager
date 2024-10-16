@@ -5,7 +5,7 @@ using MediatR;
 
 namespace _5W2H.Application.Commands.ProjectsCommands.DeleteProject;
 
-public class DeleteProjectHandler : IRequestHandler<DeleteProjectCommand, ResultViewModel<Project>>
+public class DeleteProjectHandler : IRequestHandler<DeleteProjectCommand, ResultViewModel<int>>
 {
     private readonly IProjectRepository _projectRepository;
 
@@ -15,18 +15,17 @@ public class DeleteProjectHandler : IRequestHandler<DeleteProjectCommand, Result
     }
 
     
-    public async Task<ResultViewModel<Project>> Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
+    public async Task<ResultViewModel<int>> Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
     {
         var existingProject = await _projectRepository.GetByIdAsync(request.Id);
         
         if (existingProject == null)
         {
-            return ResultViewModel<Project>.Error("Projeto não encontrado");
+            return ResultViewModel<int>.Error("Projeto não encontrado");
         }
         
-        existingProject.Cancel();
+        await _projectRepository.DeleteAsync(request.Id);
         
-        await _projectRepository.SaveChangesAsync();
-        return ResultViewModel<Project>.Success(existingProject);
+        return ResultViewModel<int>.Success(request.Id);
     }
 }

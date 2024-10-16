@@ -14,13 +14,26 @@ public class DeleteUserHandler : IRequestHandler<DeleteUserCommand, ResultViewMo
         _userRepository = userRepository;
         
     }
-    
+
     public async Task<ResultViewModel<int>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
     {
-        var existingUser =  await _userRepository.GetByIdAsync(request.Id);
+        try
+        {
+            var existingUser = await _userRepository.GetByIdAsync(request.Id);
 
-        existingUser.SetAsDeleted();
-        await _userRepository.SaveChangesAsync();
-        return ResultViewModel<int>.Success(existingUser.Id);
+            if (existingUser == null)
+            {
+                return ResultViewModel<int>.Error("Usuário não encontrado");
+            }
+
+            await _userRepository.DeleteAsync(request.Id);
+
+            return ResultViewModel<int>.Success(request.Id);
+        }
+        catch (Exception ex)
+        {
+            // Log the exception and return an appropriate error message
+            return ResultViewModel<int>.Error("Erro ao deletar usuário: " + ex.Message);
+        }
     }
 }

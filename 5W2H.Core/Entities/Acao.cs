@@ -44,8 +44,6 @@ public class Acao : BaseEntity
     public string ConclusionText { get; private set; }
 
     public int ProjectId { get; private set; }  // Apenas ID do projeto, sem referência ao objeto completo.
-
-    public DateTime? CreatedAt { get; private set; }
     public DateTime? StartedAt { get; private set; }
     public DateTime? CompletedAt { get; private set; }
 
@@ -73,6 +71,7 @@ public class Acao : BaseEntity
             CompletedAt = DateTime.UtcNow;
         }
     }
+
 
     // Atualiza as informações da ação
     public void Update(string title, string what, string why, string when, string where, string who,

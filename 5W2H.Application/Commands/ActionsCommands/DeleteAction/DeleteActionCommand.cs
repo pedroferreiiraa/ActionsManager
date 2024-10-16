@@ -4,7 +4,7 @@ using MediatR;
 
 namespace _5W2H.Application.Commands.ActionsCommands.DeleteAction;
 
-public class DeleteActionCommand : IRequest<ResultViewModel<Acao>>
+public class DeleteActionCommand : IRequest<ResultViewModel<int>>
 {
     public DeleteActionCommand(int id)
     {

@@ -12,5 +12,7 @@ public interface IActionRepository
     Task Update(Acao acao);
     Task<bool> Exists(int id);
     
+    Task<int> DeleteAsync(int id);
+    
     Task SaveChangesAsync();
 }

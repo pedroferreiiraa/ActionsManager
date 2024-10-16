@@ -16,15 +16,16 @@ public class UserRepository : IUserRepository
     
     public async Task<User> GetByIdAsync(int id)
     {
-        return await _context.Users.SingleOrDefaultAsync(u => u.Id == id);
-        
+        return await _context.Users
+            .SingleOrDefaultAsync(u => u.Id == id && !u.IsDeleted);
+
     }
 
     public async Task<User> GetUserByEmailAndPassword(string email, string passwordHash)
     {
         return await _context
             .Users
-            .SingleOrDefaultAsync(u => u.Email == email && u.Password == passwordHash);
+            .SingleOrDefaultAsync(u => u.Email == email && u.Password == passwordHash) ?? throw new InvalidOperationException();
     }
 
     public async Task<User> AddAsync(User user)
@@ -48,17 +49,23 @@ public class UserRepository : IUserRepository
         
     }
 
-    public async Task Delete(int id)
-    {
-        var user = _context.Users.SingleOrDefault(u => u.Id == id);
-        user.SetAsDeleted();
-        await _context.SaveChangesAsync();
-    }
+ 
 
     public async Task SaveChangesAsync()
     {
         await _context.SaveChangesAsync();
     }
 
+    public async Task<int> DeleteAsync(int id)
+    {
+        var user = await _context.Users.SingleOrDefaultAsync(u => u.Id == id);
 
+        if (user == null || user.IsDeleted)
+            throw new InvalidOperationException("User não encontrado ou já foi deletado");
+
+        user.SetAsDeleted();
+        _context.Users.Update(user);
+        await _context.SaveChangesAsync();
+        return user.Id;
+    }
 }

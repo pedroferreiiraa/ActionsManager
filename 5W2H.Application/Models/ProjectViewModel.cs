@@ -7,6 +7,7 @@ namespace _5W2H.Application.Models
 {
     public class ProjectViewModel
     {
+        public int Id { get; set; }
         public string Title { get; private set; }
         public int ProjectNumber { get; private set; }
         public ProjectStatusEnum Status { get; private set; }
@@ -16,6 +17,7 @@ namespace _5W2H.Application.Models
         public DateTime? CreatedAt { get; private set; }
         public DateTime? StartedAt { get; private set; }
         public DateTime? CompletedAt { get; private set; }
+        public bool IsDeleted { get; private set; }
         
         // Somente os IDs das ações
         public IEnumerable<int> ActionIds { get; private set; }
@@ -25,6 +27,7 @@ namespace _5W2H.Application.Models
         {
             return new ProjectViewModel
             {
+                Id = project.Id,
                 Title = project.Title,
                 ProjectNumber = project.ProjectNumber,
                 Status = project.Status,
@@ -33,7 +36,8 @@ namespace _5W2H.Application.Models
                 CreatedAt = project.CreatedAt,
                 StartedAt = project.StartedAt,
                 CompletedAt = project.CompletedAt,
-                ActionIds = project.Actions.Select(a => a.Id) 
+                ActionIds = project.Actions.Select(a => a.Id) ,
+                IsDeleted = project.IsDeleted,
             };
         }
     }

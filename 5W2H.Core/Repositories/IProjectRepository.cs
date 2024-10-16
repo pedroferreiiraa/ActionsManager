@@ -11,6 +11,7 @@ public interface IProjectRepository
     Task<int> AddAsync(Project project);
     Task Update(Project project);
     Task<bool> Exists(int id);
+    Task<int> DeleteAsync(int id);
     Task<Project> GetByIdWithActionsAsync(int id);
     
     Task SaveChangesAsync();

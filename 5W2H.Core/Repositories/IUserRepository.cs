@@ -11,4 +11,5 @@ public interface IUserRepository
     Task Update(User user);
     Task SaveChangesAsync();
     
+    Task<int> DeleteAsync(int id);
 }

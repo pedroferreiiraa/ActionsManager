@@ -4,7 +4,7 @@ using MediatR;
 
 namespace _5W2H.Application.Commands.ProjectsCommands.DeleteProject;
 
-public class DeleteProjectCommand : IRequest<ResultViewModel<Project>>
+public class DeleteProjectCommand : IRequest<ResultViewModel<int>>
 {
     public DeleteProjectCommand(int id)
     {

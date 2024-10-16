@@ -5,6 +5,7 @@ using _5W2H.Application.Commands.ProjectsCommands.InsertProjectAction;
 using _5W2H.Application.Commands.ProjectsCommands.StartProject;
 using _5W2H.Application.Commands.ProjectsCommands.UpdateProject;
 using _5W2H.Application.Queries.ProjectQueries.GetAllProjects;
+using _5W2H.Application.Queries.ProjectQueries.GetProjectById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,14 +30,22 @@ public class ProjectController : ControllerBase
     
         return Ok(result);
     }
-    //
-    // [HttpGet("{id}")]
-    // public async Task<IActionResult> GetById(int id)
-    // {
-    //     var result = await _mediator.Send(new GetProjectByIdQuery(id));
-    //     return Ok(result);
-    // }
-    //
+    
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(int id)
+    {
+        var query = new GetProjectByIdQuery(id);
+        
+        var project = await _mediator.Send(query);
+
+        if (project == null)
+        {
+            return NotFound();
+        }
+        
+        return Ok(project);
+    }
+    
     
     
     [HttpPost]

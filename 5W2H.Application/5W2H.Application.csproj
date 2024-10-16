@@ -19,10 +19,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Queries\ProjectQueries\GetProjectById\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Compile Remove="Models\CreateProjectInputModel.cs" />
     </ItemGroup>
 

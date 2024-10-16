@@ -5,7 +5,7 @@ using MediatR;
 
 namespace _5W2H.Application.Commands.ActionsCommands.DeleteAction;
 
-public class DeleteActionHandler : IRequestHandler<DeleteActionCommand, ResultViewModel<Acao>>
+public class DeleteActionHandler : IRequestHandler<DeleteActionCommand, ResultViewModel<int>>
 {
     
     private readonly IActionRepository _actionRepository;
@@ -15,18 +15,17 @@ public class DeleteActionHandler : IRequestHandler<DeleteActionCommand, ResultVi
         _actionRepository = actionRepository;
     }
     
-    public async Task<ResultViewModel<Acao>> Handle(DeleteActionCommand request, CancellationToken cancellationToken)
+    public async Task<ResultViewModel<int>> Handle(DeleteActionCommand request, CancellationToken cancellationToken)
     {
         var existingAction = await _actionRepository.GetByIdAsync(request.Id);
 
         if (existingAction == null)
         {
-            return ResultViewModel<Acao>.Error("Action not found");
+            return ResultViewModel<int>.Error("Ação não encontrada");
         }
+       
+        await _actionRepository.DeleteAsync(request.Id);
         
-        existingAction.Cancel();
-        
-        await _actionRepository.SaveChangesAsync();
-        return ResultViewModel<Acao>.Success(existingAction);
+        return ResultViewModel<int>.Success(request.Id);
     }
 }

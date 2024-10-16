@@ -25,7 +25,7 @@ public class ProjectRepository : IProjectRepository
     public async Task<Project> GetByIdAsync(int id)
     {
         return await _context.Projects
-            .SingleOrDefaultAsync(p => p.Id == id) ?? throw new InvalidOperationException();
+            .SingleOrDefaultAsync(u => u.Id == id && !u.IsDeleted);
     }
     
     public async Task<Project> GetByIdWithActionsAsync(int id)
@@ -58,11 +58,21 @@ public class ProjectRepository : IProjectRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task Delete(int id)
+    public async Task<int> DeleteAsync(int id)
     {
         var project =  _context.Projects.SingleOrDefault(p => p.Id == id);
+        
+        if (project == null)
+            throw new InvalidOperationException("Projeto não encontrado");
+        
         project.SetAsDeleted();
+        
+        _context.Projects.Update(project);
+        
         await _context.SaveChangesAsync();
+
+        return project.Id;
+
     }
 
     public async Task<Project> StartAsync(Project project)

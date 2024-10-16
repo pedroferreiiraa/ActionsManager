@@ -22,8 +22,6 @@ public class Project : BaseEntity
     public ProjectStatusEnum Status { get; private set; }
     public int UserId { get; private set; }
     public string OriginDate { get; private set; }
-
-    public DateTime? CreatedAt { get; private set; }
     public DateTime? StartedAt { get; private set; }
     public DateTime? CompletedAt { get; private set; }
     
@@ -50,8 +48,7 @@ public class Project : BaseEntity
     {
         Actions.Remove(acao);
     }
-
-    // Métodos de controle de status do projeto
+    
     public void Cancel()
     {
         if (Status == ProjectStatusEnum.InProgress || Status == ProjectStatusEnum.Suspended)

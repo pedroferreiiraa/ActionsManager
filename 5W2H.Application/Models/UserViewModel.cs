@@ -11,6 +11,7 @@ public class UserViewModel
         Email = user.Email;
         Id = user.Id;
         Role = user.Role;
+        IsDeleted = user.IsDeleted;
     }
 
 
@@ -18,5 +19,6 @@ public class UserViewModel
     public string FullName { get;  set; }
     public string Email { get;  set; }
     public string Role {get; set; }
+    public bool IsDeleted { get; set; }
     
 }

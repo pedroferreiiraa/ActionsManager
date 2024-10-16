@@ -35,8 +35,16 @@ public class ActionController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
-        var result = await _mediator.Send(new GetActionByIdQuery(id));
-        return Ok(result);
+        var query = new GetActionByIdQuery(id);
+        
+        var action = await _mediator.Send(query);
+
+        if (action == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(action);
     }
     
     

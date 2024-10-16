@@ -2,7 +2,6 @@ using _5W2H.Core.Entities;
 using _5W2H.Core.Repositories;
 using _5W2H.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using Action = _5W2H.Core.Entities.Action;
 
 namespace _5W2H.Infrastructure.Repositories;
 
@@ -15,31 +14,31 @@ public class ActionRepository : IActionRepository
         _context = context;
     }
     
-    public async Task<List<Action>> GetAllAsync()
+    public async Task<List<Acao>> GetAllAsync()
     {
-        var projects = await _context.Actions.ToListAsync();
-        return projects.Select(p => (Action)p).ToList(); // Supondo que Project herde de Action ou que você tenha uma conversão
+        var projects = await _context.Acoes.ToListAsync();
+        return projects.Select(p => (Acao)p).ToList(); // Supondo que Project herde de Action ou que você tenha uma conversão
     }
 
   
 
-    public async Task<Action> GetByIdAsync(int id)
+    public async Task<Acao> GetByIdAsync(int id)
     {
-        return await _context.Actions
+        return await _context.Acoes
             .SingleOrDefaultAsync(p => p.Id == id) ?? throw new InvalidOperationException();
     }
 
-    public async Task<int> AddAsync(Action action)
+    public async Task<int> AddAsync(Acao acao)
     {
-        await _context.Actions.AddAsync(action);
+        await _context.Acoes.AddAsync(acao);
         await _context.SaveChangesAsync(); 
-        return action.Id;
+        return acao.Id;
     }
     
 
-    public async Task Update(Action action)
+    public async Task Update(Acao acao)
     {
-        _context.Actions.Update(action);
+        _context.Acoes.Update(acao);
         await _context.SaveChangesAsync();
     }
 
@@ -55,14 +54,14 @@ public class ActionRepository : IActionRepository
 
     public async Task Delete(int id)
     {
-        var action =  _context.Actions.SingleOrDefault(p => p.Id == id);
+        var action =  _context.Acoes.SingleOrDefault(p => p.Id == id);
         action.SetAsDeleted();
         await _context.SaveChangesAsync();
     }
 
-    public async Task<Action> StartAsync(Action action)
+    public async Task<Acao> StartAsync(Acao acao)
     {
-        var existingProjectAction = await _context.Actions.SingleOrDefaultAsync(p => p.Id == action.Id);
+        var existingProjectAction = await _context.Acoes.SingleOrDefaultAsync(p => p.Id == acao.Id);
         if (existingProjectAction == null)
         {
             return null;

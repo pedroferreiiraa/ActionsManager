@@ -1,7 +1,6 @@
 using _5W2H.Core;
 using _5W2H.Core.Entities;
 using _5W2H.Core.Enums;
-using Action = _5W2H.Core.Entities.Action;
 
 namespace _5W2H.Application.Models;
 
@@ -37,6 +36,6 @@ public class ActionDetailsViewModel
     public string Origin { get; private set; }
     public string OriginDate { get; private set; }
     
-    public static ActionDetailsViewModel FromEntity(Action action) 
-        => new (action.Id, action.Title, action.What, action.Why, action.When, action.Where, action.Who, action.How, action.HowMuch, action.Status, action.Origin, action.OriginDate);
+    public static ActionDetailsViewModel FromEntity(Acao acao) 
+        => new (acao.Id, acao.Title, acao.What, acao.Why, acao.When, acao.Where, acao.Who, acao.How, acao.HowMuch, acao.Status, acao.Origin, acao.OriginDate);
 }

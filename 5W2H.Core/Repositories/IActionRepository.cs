@@ -1,15 +1,15 @@
 
-using Action = _5W2H.Core.Entities.Action;
+using _5W2H.Core.Entities;
 
 namespace _5W2H.Core.Repositories;
 
 public interface IActionRepository
 {
-    Task<List<Action>> GetAllAsync();
-    Task<Action> GetByIdAsync(int id);
-    Task<Action> StartAsync(Action action);
-    Task<int> AddAsync(Action action);
-    Task Update(Action action);
+    Task<List<Acao>> GetAllAsync();
+    Task<Acao> GetByIdAsync(int id);
+    Task<Acao> StartAsync(Acao acao);
+    Task<int> AddAsync(Acao acao);
+    Task Update(Acao acao);
     Task<bool> Exists(int id);
     
     Task SaveChangesAsync();

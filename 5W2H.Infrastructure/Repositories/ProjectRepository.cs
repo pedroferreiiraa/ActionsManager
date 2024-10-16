@@ -17,8 +17,9 @@ public class ProjectRepository : IProjectRepository
     
     public async Task<List<Project>> GetAllAsync()
     {
-        var projects = await _context.Projects.ToListAsync();
-        return projects.Select(p => (Project)p).ToList(); // Supondo que Project herde de Action ou que você tenha uma conversão
+        return await _context.Projects
+            .Include(p => p.Actions) // Inclui as ações relacionadas
+            .ToListAsync();
     }
 
     public async Task<Project> GetByIdAsync(int id)
@@ -30,8 +31,7 @@ public class ProjectRepository : IProjectRepository
     public async Task<Project> GetByIdWithActionsAsync(int id)
     {
         return await _context.Projects
-            .Include(p => p.Actions) 
-            .SingleOrDefaultAsync(p => p.Id == id); 
+            .SingleOrDefaultAsync(p => p.Id == id) ?? throw new InvalidOperationException(); 
     }
 
     public async Task<int> AddAsync(Project project)
@@ -67,19 +67,21 @@ public class ProjectRepository : IProjectRepository
 
     public async Task<Project> StartAsync(Project project)
     {
-        var existingProjectAction = await _context.Projects.SingleOrDefaultAsync(p => p.Id == project.Id);
+        var existingProjectAction = await _context.Projects
+            .Include(p => p.Actions)  // Garante que as ações também serão carregadas
+            .SingleOrDefaultAsync(p => p.Id == project.Id);
+
         if (existingProjectAction == null)
         {
             return null;
         }
-        
-        existingProjectAction.Start();
-        
+    
+        existingProjectAction.Start(); // Método para iniciar o projeto
+    
         await _context.SaveChangesAsync();
-        
+    
         return existingProjectAction;
-
-        
     }
+
     
 }

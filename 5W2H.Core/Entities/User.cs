@@ -17,7 +17,7 @@ namespace _5W2H.Core.Entities
             Department = department; // Agora é uma referência a um objeto Department
 
             Projects = new List<Project>();
-            Actions = new List<Action>();
+            Actions = new List<Acao>();
         }
 
         public string FullName { get; private set; }
@@ -27,7 +27,7 @@ namespace _5W2H.Core.Entities
         
         public List<Project> Projects { get; set; } 
         
-        public List<Action> Actions { get; set; }
+        public List<Acao> Actions { get; set; }
         
         // Referência ao departamento
         public Department Department { get; set; } 

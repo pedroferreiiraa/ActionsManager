@@ -2,7 +2,6 @@ using _5W2H.Application.Models;
 using _5W2H.Core.Entities;
 using _5W2H.Core.Enums;
 using MediatR;
-using Action = _5W2H.Core.Entities.Action;
 
 namespace _5W2H.Application.Commands.ActionsCommands.InsertAction;
 
@@ -24,6 +23,6 @@ public class InsertActionCommand : IRequest<ResultViewModel<int>>
     public string ConclusionText { get;  set; }
     public int UserId { get; set; }
     
-    public Action ToEntity() 
+    public Acao ToEntity() 
         => new(Title, What, Why, When, Where, Who, How, HowMuch,  Status, Origin, OriginDate, ConclusionText, UserId, ProjectId);
 }

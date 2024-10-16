@@ -1,10 +1,10 @@
 using _5W2H.Application.Models;
+using _5W2H.Core.Entities;
 using MediatR;
-using Action = _5W2H.Core.Entities.Action;
 
 namespace _5W2H.Application.Commands.ActionsCommands.UpdateAction;
 
-public class UpdateActionCommand : IRequest<ResultViewModel<Action>>
+public class UpdateActionCommand : IRequest<ResultViewModel<Acao>>
 {
     public int Id { get; set; }
     public string Title { get; set; }

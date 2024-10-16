@@ -1,6 +1,7 @@
 using _5W2H.Application.Commands.ProjectsCommands.CompleteProject;
 using _5W2H.Application.Commands.ProjectsCommands.DeleteProject;
 using _5W2H.Application.Commands.ProjectsCommands.InsertProject;
+using _5W2H.Application.Commands.ProjectsCommands.InsertProjectAction;
 using _5W2H.Application.Commands.ProjectsCommands.StartProject;
 using _5W2H.Application.Commands.ProjectsCommands.UpdateProject;
 using _5W2H.Application.Queries.ProjectQueries.GetAllProjects;
@@ -72,6 +73,20 @@ public class ProjectController : ControllerBase
         await _mediator.Send(command);
         return NoContent();
     }
+    
+    [HttpPost("{projectId}/actions")]
+    public async Task<IActionResult> InsertAction(int projectId, [FromBody] InsertProjectActionCommand command)
+    {
+        if (command == null)
+            return BadRequest("Comando inválido.");
+
+        command.ProjectId = projectId;
+
+        var result = await _mediator.Send(command);
+        
+        return Ok(result.Data);  
+    }
+
     
     
 }

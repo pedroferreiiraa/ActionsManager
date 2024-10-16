@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using _5W2H.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using _5W2H.Infrastructure.Persistence;
 namespace _5W2H.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(WhoDbContext))]
-    partial class WhoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241016142523_OitavMigration")]
+    partial class OitavMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

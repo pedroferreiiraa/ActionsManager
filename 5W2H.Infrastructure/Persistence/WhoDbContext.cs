@@ -19,7 +19,7 @@ namespace _5W2H.Infrastructure.Persistence
                     .Build();
 
                 var optionsBuilder = new DbContextOptionsBuilder<WhoDbContext>();
-                var connectionString = configuration.GetConnectionString("PostgreSQL");
+                var connectionString = configuration.GetConnectionString("DefaultConnection");
                 optionsBuilder.UseNpgsql(connectionString);
 
                 return new WhoDbContext(optionsBuilder.Options);

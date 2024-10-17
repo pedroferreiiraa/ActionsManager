@@ -16,7 +16,8 @@ public class AuthService : IAuthService
     {
         _configuration = configuration;
     }
-    public string GenerateJwtToken(string email, string role)
+
+    public string GenerateJwtToken(string email, string role, int id)
     {
         var issuer = _configuration["Jwt:Issuer"];
         var audience = _configuration["Jwt:Audience"];
@@ -28,13 +29,19 @@ public class AuthService : IAuthService
         var claims = new List<Claim>
         {
             new Claim("userName", email),
-            new Claim(ClaimTypes.Role, role)
+            new Claim(ClaimTypes.Role, role),
+            new Claim(ClaimTypes.NameIdentifier, id.ToString())
         };
 
-        var token = new JwtSecurityToken(issuer: issuer, audience: audience, expires: DateTime.Now.AddHours(8), claims: claims, signingCredentials: credentials);
+        var token = new JwtSecurityToken(
+            issuer: issuer, 
+            audience: audience, 
+            expires: DateTime.Now.AddHours(8), 
+            claims: claims, 
+            signingCredentials: credentials
+        );
         
         var tokenHandler = new JwtSecurityTokenHandler();
-        
         var stringToken = tokenHandler.WriteToken(token);
 
         return stringToken;
@@ -42,21 +49,16 @@ public class AuthService : IAuthService
 
     public string ComputeSha256Hash(string password)
     {
-        using (SHA256 sha256Hash = SHA256.Create())//Inicializando o método do sha256 Create
+        using (SHA256 sha256Hash = SHA256.Create())
         {
-                    //ComputeHash - retorna byte array
             byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
 
-
-                    //Converte byte array para string
-            StringBuilder builder = new StringBuilder();//concatenação de string
-
+            StringBuilder builder = new StringBuilder();
 
             for(int i = 0; i < bytes.Length; i++)
             {
-                builder.Append(bytes[i].ToString("x2"));// 2x faz com que sseja convertido em representação hexadecimal
+                builder.Append(bytes[i].ToString("x2"));
             }
-
 
             return builder.ToString();
         }

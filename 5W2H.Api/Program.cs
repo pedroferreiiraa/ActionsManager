@@ -2,7 +2,9 @@ using System.Text;
 using _5W2H.Api.ExceptionHandler;
 using _5W2H.Application;
 using _5W2H.Infrastructure;
+using _5W2H.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -58,12 +60,13 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend",
+    options.AddPolicy("AllowAll",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173")  // Adicione o endereço do seu frontend
-                .AllowAnyHeader()
-                .AllowAnyMethod();
+            policy
+                .AllowAnyOrigin()    // Permite qualquer origem
+                .AllowAnyHeader()    // Permite qualquer cabeçalho
+                .AllowAnyMethod();   // Permite qualquer método HTTP (GET, POST, etc.)
         });
 });
 
@@ -91,19 +94,19 @@ builder.Services
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "5W2H API v1");
+    });
 }
 
 app.UseExceptionHandler();
 
-app.UseHttpsRedirection();
-
-
 app.UseRouting();
-app.UseCors("AllowFrontend");
+app.UseCors("AllowAll");
 
 app.UseAuthentication();
 app.UseAuthorization();

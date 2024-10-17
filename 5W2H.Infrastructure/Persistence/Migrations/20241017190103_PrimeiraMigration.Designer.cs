@@ -12,8 +12,8 @@ using _5W2H.Infrastructure.Persistence;
 namespace _5W2H.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(WhoDbContext))]
-    [Migration("20241016142523_OitavMigration")]
-    partial class OitavMigration
+    [Migration("20241017190103_PrimeiraMigration")]
+    partial class PrimeiraMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,7 +40,7 @@ namespace _5W2H.Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("How")
@@ -140,7 +140,7 @@ namespace _5W2H.Infrastructure.Persistence.Migrations
                     b.Property<DateTime?>("CompletedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime?>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsDeleted")

@@ -18,7 +18,9 @@ namespace _5W2H.Infrastructure.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<int>(type: "integer", nullable: false)
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -47,7 +49,7 @@ namespace _5W2H.Infrastructure.Persistence.Migrations
                         column: x => x.DepartmentId,
                         principalTable: "Departments",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -60,11 +62,10 @@ namespace _5W2H.Infrastructure.Persistence.Migrations
                     ProjectNumber = table.Column<int>(type: "integer", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: false),
                     UserId = table.Column<int>(type: "integer", nullable: false),
-                    ConclusionText = table.Column<string>(type: "text", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    OriginDate = table.Column<string>(type: "text", nullable: false),
                     StartedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     CompletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UserId1 = table.Column<int>(type: "integer", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
@@ -76,15 +77,10 @@ namespace _5W2H.Infrastructure.Persistence.Migrations
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Projects_Users_UserId1",
-                        column: x => x.UserId1,
-                        principalTable: "Users",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Actions",
+                name: "Acoes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -98,63 +94,47 @@ namespace _5W2H.Infrastructure.Persistence.Migrations
                     How = table.Column<string>(type: "text", nullable: false),
                     HowMuch = table.Column<decimal>(type: "numeric", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: false),
-                    UserId1 = table.Column<int>(type: "integer", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
                     Origin = table.Column<string>(type: "text", nullable: false),
                     OriginDate = table.Column<string>(type: "text", nullable: false),
                     ConclusionText = table.Column<string>(type: "text", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    ProjectId = table.Column<int>(type: "integer", nullable: false),
                     StartedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     CompletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    ProjectId = table.Column<int>(type: "integer", nullable: true),
-                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Actions", x => x.Id);
+                    table.PrimaryKey("PK_Acoes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Actions_Projects_ProjectId",
+                        name: "FK_Acoes_Projects_ProjectId",
                         column: x => x.ProjectId,
                         principalTable: "Projects",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Actions_Users_UserId",
+                        name: "FK_Acoes_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Actions_Users_UserId1",
-                        column: x => x.UserId1,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Actions_ProjectId",
-                table: "Actions",
+                name: "IX_Acoes_ProjectId",
+                table: "Acoes",
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Actions_UserId",
-                table: "Actions",
+                name: "IX_Acoes_UserId",
+                table: "Acoes",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Actions_UserId1",
-                table: "Actions",
-                column: "UserId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Projects_UserId",
                 table: "Projects",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Projects_UserId1",
-                table: "Projects",
-                column: "UserId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_DepartmentId",
@@ -166,7 +146,7 @@ namespace _5W2H.Infrastructure.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Actions");
+                name: "Acoes");
 
             migrationBuilder.DropTable(
                 name: "Projects");

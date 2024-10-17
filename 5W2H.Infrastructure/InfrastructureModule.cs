@@ -22,11 +22,14 @@ public static class InfrastructureModule
 
     private static IServiceCollection AddData(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("PostgreSQL");
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
         services.AddDbContext<WhoDbContext>(o => o.UseNpgsql(connectionString));
         return services;
+        
     }
 
+    
+    
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
 

@@ -27,8 +27,8 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, LoginUs
             return null;
         }
         
-        var token = _authService.GenerateJwtToken(user.Email, user.Role.ToString());
+        var token = _authService.GenerateJwtToken(user.Email, user.Role.ToString(), user.Id);
         
-        return new LoginUserViewModel(user.Email, token);
+        return new LoginUserViewModel(user.Email, token, user.Id);
     }
 }

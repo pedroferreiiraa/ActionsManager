@@ -9,11 +9,14 @@ public class GetAllProjectsQuery : IRequest<ResultViewModel<PaginatedList<Projec
     public string Search { get; set; }
     public int PageNumber { get; set; }
     public int PageSize { get; set; }
+    
+    public int Status { get; set; } = -1;
 
-    public GetAllProjectsQuery(string search, int pageNumber, int pageSize)
+    public GetAllProjectsQuery(string search, int pageNumber, int pageSize, int status)
     {
         Search = search;
         PageNumber = pageNumber;
         PageSize = pageSize;
+        Status = status;
     }
 }

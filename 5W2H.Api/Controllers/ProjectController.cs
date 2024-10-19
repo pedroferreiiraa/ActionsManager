@@ -23,10 +23,10 @@ public class ProjectController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> Get(string search = "", int pageNumber = 1, int pageSize = 5)
+    public async Task<IActionResult> Get(string search = "", int pageNumber = 1, int pageSize = 10, int status = -1)
     {
-        // Criação da query com parâmetros de busca, número da página e tamanho da página
-        var query = new GetAllProjectsQuery(search, pageNumber, pageSize);
+        // Criação da query com parâmetros de busca, número da página, tamanho da página e status
+        var query = new GetAllProjectsQuery(search, pageNumber, pageSize, status);
         var result = await _mediator.Send(query);
 
         // Se o resultado for bem-sucedido, retorne a lista de projetos paginada com informações extras

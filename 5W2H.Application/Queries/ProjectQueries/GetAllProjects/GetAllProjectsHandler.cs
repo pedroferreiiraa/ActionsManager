@@ -1,4 +1,5 @@
 using _5W2H.Application.Models;
+using _5W2H.Core.Enums;
 using _5W2H.Core.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -18,9 +19,17 @@ namespace _5W2H.Application.Queries.ProjectQueries.GetAllProjects
         {
             var projectsQuery = _projectRepository.Query();
 
+            // Filtragem por status
+            if (request.Status >= 0)
+            {
+                var projectStatus = (ProjectStatusEnum)request.Status;
+                projectsQuery = projectsQuery.Where(p => p.Status == projectStatus);
+            }
+
+            // Filtragem por nome (se houver busca)
             if (!string.IsNullOrEmpty(request.Search))
             {
-                projectsQuery = projectsQuery.Where(p => p.Title.ToLower().StartsWith(request.Search.ToLower()));
+                projectsQuery = projectsQuery.Where(p => p.Title.ToLower().Contains(request.Search.ToLower()));
             }
 
             var totalItems = await projectsQuery.CountAsync(cancellationToken);
@@ -35,12 +44,8 @@ namespace _5W2H.Application.Queries.ProjectQueries.GetAllProjects
             }
 
             var projectViewModels = pagedProjects.Select(ProjectViewModel.ToEntity).ToList();
-
-            // Criar a lista paginada com as informações necessárias
-            var paginatedList = new PaginatedList<ProjectViewModel>(projectViewModels, totalItems, request.PageNumber, request.PageSize);
-
-            // Retornar o ResultViewModel com a lista paginada
-            return ResultViewModel<PaginatedList<ProjectViewModel>>.Success(paginatedList);
+            return ResultViewModel<PaginatedList<ProjectViewModel>>.Success(new PaginatedList<ProjectViewModel>(projectViewModels, totalItems, request.PageNumber, request.PageSize));
         }
+
     }
 }

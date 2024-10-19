@@ -23,20 +23,30 @@ public class ProjectController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> Get(string search = "", int pageNumber = 1, int pageSize = 10)
+    public async Task<IActionResult> Get(string search = "", int pageNumber = 1, int pageSize = 5)
     {
+        // Criação da query com parâmetros de busca, número da página e tamanho da página
         var query = new GetAllProjectsQuery(search, pageNumber, pageSize);
         var result = await _mediator.Send(query);
 
+        // Se o resultado for bem-sucedido, retorne a lista de projetos paginada com informações extras
         if (result.IsSuccess)
         {
-            return Ok(result);
+            return Ok(new
+            {
+                data = result.Data.Items, // Lista de projetos
+                totalItems = result.Data.TotalItems, // Total de projetos encontrados
+                totalPages = result.Data.TotalPages, // Número total de páginas
+                pageNumber = result.Data.PageNumber, // Página atual
+                pageSize = result.Data.PageSize // Tamanho da página
+            });
         }
         else
         {
             return BadRequest(result.Message);
         }
     }
+
     
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)

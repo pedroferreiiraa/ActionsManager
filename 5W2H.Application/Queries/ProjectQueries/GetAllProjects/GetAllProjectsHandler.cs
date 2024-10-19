@@ -3,10 +3,9 @@ using _5W2H.Core.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace _5W2H.Application.Queries.ProjectQueries.GetAllProjects
 {
-    public class GetAllProjectsHandler : IRequestHandler<GetAllProjectsQuery, ResultViewModel<List<ProjectViewModel>>>
+    public class GetAllProjectsHandler : IRequestHandler<GetAllProjectsQuery, ResultViewModel<PaginatedList<ProjectViewModel>>>
     {
         private readonly IProjectRepository _projectRepository;
 
@@ -15,15 +14,13 @@ namespace _5W2H.Application.Queries.ProjectQueries.GetAllProjects
             _projectRepository = projectRepository;
         }
 
-        public async Task<ResultViewModel<List<ProjectViewModel>>> Handle(GetAllProjectsQuery request, CancellationToken cancellationToken)
+        public async Task<ResultViewModel<PaginatedList<ProjectViewModel>>> Handle(GetAllProjectsQuery request, CancellationToken cancellationToken)
         {
-            // Aplicar filtro de pesquisa e paginação usando o novo método Query
             var projectsQuery = _projectRepository.Query();
 
-            // Filtro de pesquisa - busca projetos cujo título comece com o termo fornecido
             if (!string.IsNullOrEmpty(request.Search))
             {
-                projectsQuery = projectsQuery.Where(p => p.Title.StartsWith(request.Search));
+                projectsQuery = projectsQuery.Where(p => p.Title.ToLower().StartsWith(request.Search.ToLower()));
             }
 
             var totalItems = await projectsQuery.CountAsync(cancellationToken);
@@ -34,13 +31,16 @@ namespace _5W2H.Application.Queries.ProjectQueries.GetAllProjects
 
             if (!pagedProjects.Any())
             {
-                return ResultViewModel<List<ProjectViewModel>>.Error("Nenhum projeto encontrado.");
+                return ResultViewModel<PaginatedList<ProjectViewModel>>.Error("Nenhum projeto encontrado.");
             }
 
             var projectViewModels = pagedProjects.Select(ProjectViewModel.ToEntity).ToList();
-            return ResultViewModel<List<ProjectViewModel>>.Success(projectViewModels);
+
+            // Criar a lista paginada com as informações necessárias
+            var paginatedList = new PaginatedList<ProjectViewModel>(projectViewModels, totalItems, request.PageNumber, request.PageSize);
+
+            // Retornar o ResultViewModel com a lista paginada
+            return ResultViewModel<PaginatedList<ProjectViewModel>>.Success(paginatedList);
         }
-
-
     }
 }

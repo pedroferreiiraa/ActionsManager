@@ -30,6 +30,9 @@ public class ResultViewModel<T> : ResultViewModel, IRequest
 
     public T? Data { get; private set; }
 
+    // Adicionando a nova propriedade AdditionalData
+    public object? AdditionalData { get; set; }
+
     public static ResultViewModel<T> Success(T data)
         => new(data);
 

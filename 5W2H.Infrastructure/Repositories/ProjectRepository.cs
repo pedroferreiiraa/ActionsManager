@@ -58,6 +58,11 @@ public class ProjectRepository : IProjectRepository
         await _context.SaveChangesAsync();
     }
 
+    public IQueryable<Project> Query()
+    {
+        return _context.Projects.AsQueryable();
+    }
+
     public async Task<int> DeleteAsync(int id)
     {
         var project =  _context.Projects.SingleOrDefault(p => p.Id == id);

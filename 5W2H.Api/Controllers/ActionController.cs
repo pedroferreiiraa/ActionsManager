@@ -13,7 +13,7 @@ namespace _5W2H.Api.Controllers;
 
 [ApiController]
 [Route("/api/actions")]
-[Authorize]
+
 public class ActionController : ControllerBase
 {
     private readonly IMediator _mediator;

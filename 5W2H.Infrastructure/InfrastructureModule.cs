@@ -23,7 +23,7 @@ public static class InfrastructureModule
     private static IServiceCollection AddData(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection");
-        services.AddDbContext<WhoDbContext>(o => o.UseNpgsql(connectionString));
+        services.AddDbContext<WhoDbContext>(o => o.UseSqlServer(connectionString));
         return services;
         
     }

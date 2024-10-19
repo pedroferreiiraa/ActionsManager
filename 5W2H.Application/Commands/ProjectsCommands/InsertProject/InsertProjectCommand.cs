@@ -12,8 +12,9 @@ public class InsertProjectCommand : IRequest<ResultViewModel<int>>
     public int UserId { get; set; }
     public ProjectStatusEnum Status { get; set; }
     public string OriginDate { get; set; }
+    public string Description { get; set; }
     
     public Project ToEntity()
-        => new(Title, ProjectNumber, UserId, Status, OriginDate);
+        => new(Title, ProjectNumber, UserId, Status, OriginDate, Description);
     
 }

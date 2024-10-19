@@ -7,7 +7,7 @@ namespace _5W2H.Core.Entities;
 
 public class Project : BaseEntity
 {
-    public Project(string title, int projectNumber, int userId, ProjectStatusEnum status, string originDate)
+    public Project(string title, int projectNumber, int userId, ProjectStatusEnum status, string originDate, string description)
     {
         Title = title;
         ProjectNumber = projectNumber;
@@ -15,6 +15,7 @@ public class Project : BaseEntity
         Status = status;
         OriginDate = originDate;
         Actions = new List<Acao>();
+        Description = description;
     }
 
     public string Title { get; private set; }
@@ -24,6 +25,8 @@ public class Project : BaseEntity
     public string OriginDate { get; private set; }
     public DateTime? StartedAt { get; private set; }
     public DateTime? CompletedAt { get; private set; }
+    
+    public string Description { get; private set; }
     
     
     public List<Acao> Actions { get; private set; } // Lista privada de ações.
@@ -60,7 +63,7 @@ public class Project : BaseEntity
         if (Status == ProjectStatusEnum.Created)
         {
             Status = ProjectStatusEnum.InProgress;
-            StartedAt = DateTime.UtcNow;
+            StartedAt = DateTime.Now;
         }
     }
 
@@ -69,7 +72,7 @@ public class Project : BaseEntity
         if (Status == ProjectStatusEnum.InProgress)
         {
             Status = ProjectStatusEnum.Completed;
-            CompletedAt = DateTime.UtcNow;
+            CompletedAt = DateTime.Now;
         }
     }
 

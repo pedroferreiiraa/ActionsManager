@@ -19,6 +19,8 @@ namespace _5W2H.Application.Models
         public DateTime? CompletedAt { get; private set; }
         public bool IsDeleted { get; private set; }
         
+        public string Description { get; set; }
+        
         // Somente os IDs das ações
         public IEnumerable<int> ActionIds { get; private set; }
 
@@ -38,6 +40,7 @@ namespace _5W2H.Application.Models
                 CompletedAt = project.CompletedAt,
                 ActionIds = project.Actions.Select(a => a.Id) ,
                 IsDeleted = project.IsDeleted,
+                Description = project.Description,
             };
         }
     }

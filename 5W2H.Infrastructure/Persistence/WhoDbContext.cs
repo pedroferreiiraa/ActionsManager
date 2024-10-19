@@ -20,7 +20,7 @@ namespace _5W2H.Infrastructure.Persistence
 
                 var optionsBuilder = new DbContextOptionsBuilder<WhoDbContext>();
                 var connectionString = configuration.GetConnectionString("DefaultConnection");
-                optionsBuilder.UseNpgsql(connectionString);
+                optionsBuilder.UseSqlServer(connectionString);
 
                 return new WhoDbContext(optionsBuilder.Options);
             }

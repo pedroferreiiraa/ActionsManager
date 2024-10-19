@@ -15,4 +15,7 @@ public interface IProjectRepository
     Task<Project> GetByIdWithActionsAsync(int id);
     
     Task SaveChangesAsync();
+    
+    IQueryable<Project> Query();
+    
 }

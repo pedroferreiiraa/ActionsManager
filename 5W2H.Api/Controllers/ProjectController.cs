@@ -23,12 +23,19 @@ public class ProjectController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> Get(string search = "")
+    public async Task<IActionResult> Get(string search = "", int pageNumber = 1, int pageSize = 10)
     {
-        var query = new GetAllProjectsQuery();
+        var query = new GetAllProjectsQuery(search, pageNumber, pageSize);
         var result = await _mediator.Send(query);
-    
-        return Ok(result);
+
+        if (result.IsSuccess)
+        {
+            return Ok(result);
+        }
+        else
+        {
+            return BadRequest(result.Message);
+        }
     }
     
     [HttpGet("{id}")]

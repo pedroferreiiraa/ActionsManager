@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=db;Database=ferramentagestao;User Id=sa;Password=134679As@357;Encrypt=True;TrustServerCertificate=True;
+    ports:
+      - "5000:8080"
+    restart: always
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=134679As@357
+    ports:
+      - "1433:1433"
+    volumes:
+      - db_data:/var/opt/mssql
+    restart: always
+
+volumes:
+  db_data:

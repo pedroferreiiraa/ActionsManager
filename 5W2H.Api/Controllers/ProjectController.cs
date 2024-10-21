@@ -80,17 +80,35 @@ public class ProjectController : ControllerBase
     }
     
     [HttpPut("{id}/start")]
-    public async Task<IActionResult> Start(StartProjectCommand command)
+    public async Task<IActionResult> Start(int id, [FromBody] StartProjectCommand command)
     {
-        await _mediator.Send(command);
-        return NoContent();
+        if (command.Id != id)
+        {
+            return BadRequest(new { message = "O ID no corpo da requisição não coincide com o ID da URL." });
+        }
+    
+        var result = await _mediator.Send(command);
+    
+        if (!result.IsSuccess)
+        {
+            return BadRequest(new { message = result.Message });
+        }
+        
+        return Ok(new { isSuccess = true, message = "Projeto iniciado com sucesso." });
     }
     
     [HttpPut("{id}/complete")]
-    public async Task<IActionResult> Complete(CompleteProjectCommand command)
-    {        
-        await _mediator.Send(command);
-        return NoContent();
+    public async Task<IActionResult> Complete(int id)
+    {
+        var command = new CompleteProjectCommand(id);
+        var result = await _mediator.Send(command);
+
+        if (!result.IsSuccess)
+        {
+            return BadRequest(new { message = result.Message });
+        }
+        
+        return Ok(new { isSuccess = true, message = "Projeto completado com sucesso." });
     }
     
     [HttpDelete("{id}/delete")]

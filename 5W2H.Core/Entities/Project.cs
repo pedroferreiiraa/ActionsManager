@@ -82,4 +82,5 @@ public class Project : BaseEntity
         ProjectNumber = projectNumber;
         OriginDate = originDate;
     }
+    
 }

@@ -80,22 +80,20 @@ public class ProjectRepository : IProjectRepository
 
     }
 
-    public async Task<Project> StartAsync(Project project)
+    public async Task<Project> StartAsync(int id)
     {
-        var existingProjectAction = await _context.Projects
-            .Include(p => p.Actions)  // Garante que as ações também serão carregadas
-            .SingleOrDefaultAsync(p => p.Id == project.Id);
+        var existingProject = await _context.Projects.SingleOrDefaultAsync(p => p.Id == id);
 
-        if (existingProjectAction == null)
+        if (existingProject == null)
         {
             return null;
         }
     
-        existingProjectAction.Start(); // Método para iniciar o projeto
+        existingProject.Start(); // Método para iniciar o projeto
     
         await _context.SaveChangesAsync();
     
-        return existingProjectAction;
+        return existingProject;
     }
 
     

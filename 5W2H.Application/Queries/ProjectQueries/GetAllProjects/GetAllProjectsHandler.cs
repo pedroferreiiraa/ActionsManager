@@ -1,8 +1,11 @@
 using _5W2H.Application.Models;
+using _5W2H.Core.Entities;
 using _5W2H.Core.Enums;
 using _5W2H.Core.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
+using System.Linq;
 
 namespace _5W2H.Application.Queries.ProjectQueries.GetAllProjects
 {
@@ -17,34 +20,44 @@ namespace _5W2H.Application.Queries.ProjectQueries.GetAllProjects
 
         public async Task<ResultViewModel<PaginatedList<ProjectViewModel>>> Handle(GetAllProjectsQuery request, CancellationToken cancellationToken)
         {
-            var projectsQuery = _projectRepository.Query();
+            // Start with var to let the compiler infer the correct type
+            IQueryable<Project> projectsQuery = _projectRepository.Query().Include(p => p.Actions);
 
-            // Filtragem por status
+
+            // Apply filters
             if (request.Status >= 0)
             {
                 var projectStatus = (ProjectStatusEnum)request.Status;
                 projectsQuery = projectsQuery.Where(p => p.Status == projectStatus);
             }
 
-            // Filtragem por nome (se houver busca)
             if (!string.IsNullOrEmpty(request.Search))
             {
-                projectsQuery = projectsQuery.Where(p => p.Title.ToLower().Contains(request.Search.ToLower()));
+                projectsQuery = projectsQuery.Where(p => p.Title.Contains(request.Search));
             }
 
+            // Get total count for pagination
             var totalItems = await projectsQuery.CountAsync(cancellationToken);
+
+            // Apply pagination
             var pagedProjects = await projectsQuery
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize)
                 .ToListAsync(cancellationToken);
 
+            // Check if any projects were found
             if (!pagedProjects.Any())
             {
                 return ResultViewModel<PaginatedList<ProjectViewModel>>.Error("Nenhum projeto encontrado.");
             }
 
+            // Map to ViewModel
             var projectViewModels = pagedProjects.Select(ProjectViewModel.ToEntity).ToList();
-            return ResultViewModel<PaginatedList<ProjectViewModel>>.Success(new PaginatedList<ProjectViewModel>(projectViewModels, totalItems, request.PageNumber, request.PageSize));
+
+            // Return paginated list
+            return ResultViewModel<PaginatedList<ProjectViewModel>>.Success(
+                new PaginatedList<ProjectViewModel>(projectViewModels, totalItems, request.PageNumber, request.PageSize)
+            );
         }
 
     }

@@ -64,7 +64,7 @@ namespace _5W2H.Infrastructure.Persistence
                 e.HasMany(p => p.Actions)
                     .WithOne(a => a.Project)
                     .HasForeignKey(a => a.ProjectId)
-                    .OnDelete(DeleteBehavior.Cascade);  // Excluir ações junto com o projeto
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             // Configuração de Department

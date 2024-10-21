@@ -38,9 +38,12 @@ public class InsertProjectActionHandler : IRequestHandler<InsertProjectActionCom
                 return ResultViewModel<Project>.Error("Ação já está associada a este projeto.");
             }
 
+            // Atualize o ProjectId da ação
+            action.SetProjectId(project.Id);
+
             project.AddAction(action);
             await _projectRepository.SaveChangesAsync();
-            
+        
             return new ResultViewModel<Project>(project); // Retorna o projeto atualizado
         }
         catch (Exception ex)
@@ -49,4 +52,5 @@ public class InsertProjectActionHandler : IRequestHandler<InsertProjectActionCom
             return ResultViewModel<Project>.Error("Ocorreu um erro ao adicionar a ação ao projeto.");
         }
     }
+
 }

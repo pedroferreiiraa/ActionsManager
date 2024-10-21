@@ -31,8 +31,10 @@ public class ProjectRepository : IProjectRepository
     public async Task<Project> GetByIdWithActionsAsync(int id)
     {
         return await _context.Projects
-            .SingleOrDefaultAsync(p => p.Id == id) ?? throw new InvalidOperationException(); 
+            .Include(p => p.Actions) // Inclui as ações relacionadas
+            .SingleOrDefaultAsync(p => p.Id == id && !p.IsDeleted);
     }
+
 
     public async Task<int> AddAsync(Project project)
     {

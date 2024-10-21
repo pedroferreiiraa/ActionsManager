@@ -29,7 +29,7 @@ public class Project : BaseEntity
     public string Description { get; private set; }
     
     
-    public List<Acao> Actions { get; private set; } // Lista privada de ações.
+    public virtual List<Acao> Actions { get; private set; } // Lista privada de ações.
     
     public IEnumerable<int> ActionIds => Actions.Select(a => a.Id);
 
@@ -38,8 +38,8 @@ public class Project : BaseEntity
         if (acao == null)
             throw new ArgumentNullException(nameof(acao));
 
-        if (acao.ProjectId != this.Id)
-            throw new InvalidOperationException("Ação não pertence a este projeto.");
+        // Atualize o ProjectId da ação
+        acao.SetProjectId(this.Id);
 
         if (!Actions.Contains(acao))
         {

@@ -38,7 +38,7 @@ public class Acao : BaseEntity
 
     public int UserId { get; private set; }
     public User User { get; private set; }
-    public Project Project { get; private set; }
+    public virtual Project Project { get; private set; }
     public string Origin { get; private set; }
     public string OriginDate { get; private set; }
     public string ConclusionText { get; private set; }
@@ -47,7 +47,13 @@ public class Acao : BaseEntity
     public DateTime? StartedAt { get; private set; }
     public DateTime? CompletedAt { get; private set; }
 
-    // Métodos de controle de status da ação
+    
+    
+    public void SetProjectId(int projectId)
+    {
+        ProjectId = projectId;
+    }
+    
     public void Cancel()
     {
         if (Status == ProjectStatusEnum.InProgress || Status == ProjectStatusEnum.Suspended)

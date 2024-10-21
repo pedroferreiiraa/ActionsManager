@@ -24,6 +24,8 @@ namespace _5W2H.Application.Models
         // Somente os IDs das ações
         public IEnumerable<int> ActionIds { get; private set; }
 
+        
+        
         // Método ToEntity para transformar Project em ProjectViewModel
         public static ProjectViewModel ToEntity(Project project)
         {
@@ -38,9 +40,9 @@ namespace _5W2H.Application.Models
                 CreatedAt = project.CreatedAt,
                 StartedAt = project.StartedAt,
                 CompletedAt = project.CompletedAt,
-                ActionIds = project.Actions.Select(a => a.Id) ,
                 IsDeleted = project.IsDeleted,
                 Description = project.Description,
+                ActionIds = project.Actions != null ? project.Actions.Select(a => a.Id) : Enumerable.Empty<int>(),
             };
         }
     }

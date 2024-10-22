@@ -29,7 +29,7 @@ public class Project : BaseEntity
     public string Description { get; private set; }
     
     
-    public virtual List<Acao> Actions { get; private set; } // Lista privada de ações.
+    public virtual List<Acao> Actions { get; set; } // Lista privada de ações.
     
     public IEnumerable<int> ActionIds => Actions.Select(a => a.Id);
 

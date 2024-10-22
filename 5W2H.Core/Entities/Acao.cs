@@ -37,8 +37,8 @@ public class Acao : BaseEntity
     public ProjectStatusEnum Status { get; private set; }
 
     public int UserId { get; private set; }
-    public User User { get; private set; }
-    public virtual Project Project { get; private set; }
+    public User User { get;  set; }
+    public virtual Project Project { get; set; }
     public string Origin { get; private set; }
     public string OriginDate { get; private set; }
     public string ConclusionText { get; private set; }

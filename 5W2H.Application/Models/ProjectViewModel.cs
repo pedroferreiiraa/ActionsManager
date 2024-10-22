@@ -22,7 +22,7 @@ namespace _5W2H.Application.Models
         public string Description { get; set; }
         
         // Somente os IDs das ações
-        public IEnumerable<int> ActionIds { get; private set; }
+        public List<int> ActionIds { get; private set; }
 
         
         
@@ -42,7 +42,7 @@ namespace _5W2H.Application.Models
                 CompletedAt = project.CompletedAt,
                 IsDeleted = project.IsDeleted,
                 Description = project.Description,
-                ActionIds = project.Actions != null ? project.Actions.Select(a => a.Id) : Enumerable.Empty<int>(),
+                ActionIds = project.Actions?.Select(a => a.Id).ToList() ?? new List<int>(),
             };
         }
     }

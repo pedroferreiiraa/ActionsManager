@@ -52,15 +52,14 @@ public class ProjectController : ControllerBase
     public async Task<IActionResult> GetById(int id)
     {
         var query = new GetProjectByIdQuery(id);
-        
-        var project = await _mediator.Send(query);
+        var result = await _mediator.Send(query);
 
-        if (project == null)
+        if (!result.IsSuccess || result.Data == null)
         {
-            return NotFound();
+            return NotFound(result.Message);
         }
-        
-        return Ok(project);
+
+        return Ok(result.Data);
     }
     
     

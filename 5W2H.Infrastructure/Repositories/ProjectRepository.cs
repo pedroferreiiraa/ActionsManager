@@ -44,7 +44,7 @@ public class ProjectRepository : IProjectRepository
     }
     
 
-    public async Task Update(Project project)
+    public async Task UpdateAsync(Project project)
     {
         _context.Projects.Update(project);
         await _context.SaveChangesAsync();

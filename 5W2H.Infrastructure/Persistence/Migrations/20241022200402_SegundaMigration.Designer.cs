@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using _5W2H.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using _5W2H.Infrastructure.Persistence;
 namespace _5W2H.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(WhoDbContext))]
-    partial class WhoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241022200402_SegundaMigration")]
+    partial class SegundaMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,6 +37,7 @@ namespace _5W2H.Infrastructure.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ConclusionText")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -127,9 +131,6 @@ namespace _5W2H.Infrastructure.Persistence.Migrations
 
                     b.Property<DateTime?>("CompletedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("ConclusionText")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");

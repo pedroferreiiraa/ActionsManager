@@ -19,9 +19,7 @@ public class ActionRepository : IActionRepository
         var projects = await _context.Acoes.ToListAsync();
         return projects.Select(p => (Acao)p).ToList(); // Supondo que Project herde de Action ou que você tenha uma conversão
     }
-
-  
-
+    
     public async Task<Acao> GetByIdAsync(int id)
     {
         return await _context.Acoes
@@ -36,7 +34,7 @@ public class ActionRepository : IActionRepository
     }
     
 
-    public async Task Update(Acao acao)
+    public async Task UpdateAsync(Acao acao)
     {
         _context.Acoes.Update(acao);
         await _context.SaveChangesAsync();

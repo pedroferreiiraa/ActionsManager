@@ -1,12 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "5W2H.Api", "5W2H.Api\5W2H.Api.csproj", "{7F68BD9A-C60D-4311-9CEB-95F03AEA802C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActionsManager.API", "ActionsManager.API\ActionsManager.API.csproj", "{7F68BD9A-C60D-4311-9CEB-95F03AEA802C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "5W2H.Core", "5W2H.Core\5W2H.Core.csproj", "{9ECE1130-DC85-44B2-B707-619F6F45EE5B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActionsManager.Core", "ActionsManager.Core\ActionsManager.Core.csproj", "{9ECE1130-DC85-44B2-B707-619F6F45EE5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "5W2H.Infrastructure", "5W2H.Infrastructure\5W2H.Infrastructure.csproj", "{AA20FF0F-8E9B-4A16-BAA9-34719A26AA58}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActionsManager.Infrastructure", "ActionsManager.Infrastructure\ActionsManager.Infrastructure.csproj", "{AA20FF0F-8E9B-4A16-BAA9-34719A26AA58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "5W2H.Application", "5W2H.Application\5W2H.Application.csproj", "{62E66E5F-913A-4480-8820-0D008DA1B258}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActionsManager.Application", "ActionsManager.Application\ActionsManager.Application.csproj", "{62E66E5F-913A-4480-8820-0D008DA1B258}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

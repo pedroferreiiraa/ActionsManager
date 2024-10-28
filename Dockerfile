@@ -4,17 +4,17 @@ WORKDIR /src
 
 # Copiar os arquivos de solução e de projeto
 COPY *.sln ./
-COPY 5W2H.Api/*.csproj 5W2H.Api/
-COPY 5W2H.Application/*.csproj 5W2H.Application/
-COPY 5W2H.Core/*.csproj 5W2H.Core/
-COPY 5W2H.Infrastructure/*.csproj 5W2H.Infrastructure/
+COPY ActionsManager.API/*.csproj ActionsManager.API/
+COPY ActionsManager.Application/*.csproj ActionsManager.Application/
+COPY ActionsManager.Core/*.csproj ActionsManager.Core/
+COPY ActionsManager.Infrastructure/*.csproj ActionsManager.Infrastructure/
 
 # Restaurar as dependências
 RUN dotnet restore
 
 # Copiar todo o código-fonte e compilar a aplicação
 COPY . .
-WORKDIR /src/5W2H.Api
+WORKDIR /src/ActionsManager.API
 RUN dotnet publish -c Release -o /app/publish
 
 # Etapa 2: Runtime
@@ -26,4 +26,4 @@ COPY --from=build /app/publish .
 EXPOSE 80
 
 # Definir o entrypoint
-ENTRYPOINT ["dotnet", "5W2H.Api.dll"]
+ENTRYPOINT ["dotnet", "ActionsManager.API.dll"]

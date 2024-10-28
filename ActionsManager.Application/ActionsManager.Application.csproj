@@ -8,8 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\5W2H.Core\5W2H.Core.csproj" />
-      <ProjectReference Include="..\5W2H.Infrastructure\5W2H.Infrastructure.csproj" />
+      <ProjectReference Include="..\ActionsManager.Core\ActionsManager.Core.csproj" />
+      <ProjectReference Include="..\ActionsManager.Infrastructure\ActionsManager.Infrastructure.csproj" />
 
     </ItemGroup>
 

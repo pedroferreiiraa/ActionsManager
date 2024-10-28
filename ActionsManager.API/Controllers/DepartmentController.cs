@@ -1,4 +1,5 @@
 using _5W2H.Application.Commands.DepartmentCommands.InsertDepartment;
+using _5W2H.Application.Queries.DepartmentQueries.GetAllDepartments;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,9 +15,17 @@ public class DepartmentController : ControllerBase
         _mediator = mediator;
             
     }
-    
-    
 
+    [HttpGet]
+    public async Task<IActionResult> Get()
+    {
+        var query = new GetAllDepartmentsQuery();
+        var result = await _mediator.Send(query);
+        
+        return Ok(result);
+    }
+    
+    
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] InsertDepartmentCommand command)
     {

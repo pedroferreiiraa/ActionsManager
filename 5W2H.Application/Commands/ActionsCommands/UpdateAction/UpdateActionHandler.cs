@@ -22,9 +22,9 @@ public class UpdateActionHandler : IRequestHandler<UpdateActionCommand, ResultVi
             
             return ResultViewModel<Acao>.Error("Projeto não encontrado.");
         }
-        existingAction.Update(request.Title, request.What, request.Why, request.When, request.Where, request.Who, request.How, request.HowMuch, request.Origin, request.OriginDate, request.ConclusionText);
+        existingAction.Update(request.Title, request.What, request.Why, request.When, request.Where, request.Who, request.How, request.HowMuch);
         
-        await _actionRepository.SaveChangesAsync();
+        await _actionRepository.UpdateAsync(existingAction);
 
         return ResultViewModel<Acao>.Success(existingAction);
         

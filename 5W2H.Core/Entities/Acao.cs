@@ -7,7 +7,7 @@ namespace _5W2H.Core.Entities;
 public class Acao : BaseEntity
 {
     public Acao(string title, string what, string why, string when, string where, string who, string how,
-                  decimal howMuch, ProjectStatusEnum status, string origin, string originDate, 
+                  decimal howMuch, ProjectStatusEnum status, 
                   string conclusionText, int userId, int projectId)
     {
         Title = title;
@@ -19,8 +19,6 @@ public class Acao : BaseEntity
         How = how;
         HowMuch = howMuch;
         Status = status;
-        Origin = origin;
-        OriginDate = originDate;
         ConclusionText = conclusionText;
         UserId = userId;
         ProjectId = projectId;
@@ -39,16 +37,10 @@ public class Acao : BaseEntity
     public int UserId { get; private set; }
     public User User { get;  set; }
     public virtual Project Project { get; set; }
-    public string Origin { get; private set; }
-    public string OriginDate { get; private set; }
-    public string ConclusionText { get; private set; }
-
-    public int ProjectId { get; private set; }  // Apenas ID do projeto, sem referência ao objeto completo.
+    public string? ConclusionText { get; private set; }
+    public int ProjectId { get; private set; }  
     public DateTime? StartedAt { get; private set; }
     public DateTime? CompletedAt { get; private set; }
-
-    
-    
     public void SetProjectId(int projectId)
     {
         ProjectId = projectId;
@@ -77,11 +69,9 @@ public class Acao : BaseEntity
             CompletedAt = DateTime.Now;
         }
     }
-
-
-    // Atualiza as informações da ação
+    
     public void Update(string title, string what, string why, string when, string where, string who,
-                       string how, decimal howMuch, string origin, string originDate, string conclusionText)
+                       string how, decimal howMuch)
     {
         Title = title;
         What = what;
@@ -91,8 +81,14 @@ public class Acao : BaseEntity
         Who = who;
         How = how;
         HowMuch = howMuch;
-        Origin = origin;
-        OriginDate = originDate;
+    }
+    
+    public void UpdateConclusionText(string conclusionText)
+    {
+        if (Status != ProjectStatusEnum.Completed)
+            throw new InvalidOperationException("Conclusão só pode ser atualizada quando a ação está concluída.");
+        
         ConclusionText = conclusionText;
     }
+    
 }

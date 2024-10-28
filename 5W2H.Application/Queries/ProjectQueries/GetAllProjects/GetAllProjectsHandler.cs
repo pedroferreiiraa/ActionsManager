@@ -35,7 +35,8 @@ namespace _5W2H.Application.Queries.ProjectQueries.GetAllProjects
             {
                 projectsQuery = projectsQuery.Where(p => p.Title.Contains(request.Search));
             }
-
+            projectsQuery = projectsQuery.OrderByDescending(p => p.CreatedAt);
+            
             // Get total count for pagination
             var totalItems = await projectsQuery.CountAsync(cancellationToken);
 

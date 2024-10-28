@@ -7,38 +7,40 @@ namespace _5W2H.Core.Entities;
 
 public class Project : BaseEntity
 {
-    public Project(string title, int projectNumber, int userId, ProjectStatusEnum status, string originDate, string description)
+    public Project(string title,  int userId, ProjectStatusEnum status, string originDate, 
+        string description, string origin, int originNumber, string conclusionText)
     {
         Title = title;
-        ProjectNumber = projectNumber;
+
         UserId = userId;
         Status = status;
         OriginDate = originDate;
         Actions = new List<Acao>();
         Description = description;
+        Origin = origin;
+        OriginNumber = originNumber;
+        ConclusionText = conclusionText;
     }
 
     public string Title { get; private set; }
-    public int ProjectNumber { get; private set; }
     public ProjectStatusEnum Status { get; private set; }
     public int UserId { get; private set; }
     public string OriginDate { get; private set; }
     public DateTime? StartedAt { get; private set; }
     public DateTime? CompletedAt { get; private set; }
-    
     public string Description { get; private set; }
+    public string Origin { get; private set; }
+    public int OriginNumber { get; private set; }
     
-    
-    public virtual List<Acao> Actions { get; set; } // Lista privada de ações.
-    
+    public string? ConclusionText { get; private set; }
+    public virtual List<Acao> Actions { get; set; } 
     public IEnumerable<int> ActionIds => Actions.Select(a => a.Id);
 
     public void AddAction(Acao acao)
     {
         if (acao == null)
             throw new ArgumentNullException(nameof(acao));
-
-        // Atualize o ProjectId da ação
+        
         acao.SetProjectId(this.Id);
 
         if (!Actions.Contains(acao))
@@ -76,11 +78,22 @@ public class Project : BaseEntity
         }
     }
 
-    public void Update(string title, int projectNumber, string originDate)
+    public void Update(string title, string originDate, string description, string origin, int originNumber )
     {
         Title = title;
-        ProjectNumber = projectNumber;
         OriginDate = originDate;
+        Description = description;
+        Origin = origin;
+        OriginNumber = originNumber;
     }
-    
+
+    public void UpdateConclusionText(string conclusionText)
+    {
+        if (Status != ProjectStatusEnum.Completed)
+            throw new InvalidOperationException("Conclusão só pode ser atualizada quando o projeto está concluído.");
+        
+        ConclusionText = conclusionText;
+    }
+
+
 }

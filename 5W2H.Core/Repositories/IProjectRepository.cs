@@ -9,7 +9,7 @@ public interface IProjectRepository
     Task<Project> GetByIdAsync(int id);
     Task<Project> StartAsync(int id);
     Task<int> AddAsync(Project project);
-    Task Update(Project project);
+    Task UpdateAsync(Project project);
     Task<int> DeleteAsync(int id);
     Task<Project> GetByIdWithActionsAsync(int id);
     

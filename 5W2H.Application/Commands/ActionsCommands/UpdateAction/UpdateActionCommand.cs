@@ -15,7 +15,5 @@ public class UpdateActionCommand : IRequest<ResultViewModel<Acao>>
     public string Who { get;  set; }
     public string How { get;  set; }
     public decimal HowMuch { get;  set; }
-    public string Origin { get;  set; }
-    public string OriginDate { get;  set; }
-    public string ConclusionText { get; set; }
+
 }

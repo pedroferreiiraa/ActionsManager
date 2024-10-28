@@ -17,12 +17,11 @@ public class InsertActionCommand : IRequest<ResultViewModel<int>>
     public string How { get; set; }
     public decimal HowMuch { get;  set; }
     
-    public string Origin { get;  set; }
-    public string OriginDate { get;  set; }
+
     public ProjectStatusEnum Status { get; set; }
-    public string ConclusionText { get;  set; }
+    public string? ConclusionText { get;  set; }
     public int UserId { get; set; }
     
     public Acao ToEntity() 
-        => new(Title, What, Why, When, Where, Who, How, HowMuch,  Status, Origin, OriginDate, ConclusionText, UserId, ProjectId);
+        => new(Title, What, Why, When, Where, Who, How, HowMuch,  Status,  ConclusionText, UserId, ProjectId);
 }

@@ -9,8 +9,7 @@ public interface IActionRepository
     Task<Acao> GetByIdAsync(int id);
     Task<Acao> StartAsync(Acao acao);
     Task<int> AddAsync(Acao acao);
-    Task Update(Acao acao);
-    Task<bool> Exists(int id);
+    Task UpdateAsync(Acao acao);
     
     Task<int> DeleteAsync(int id);
     

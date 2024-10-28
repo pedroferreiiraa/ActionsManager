@@ -19,12 +19,15 @@ namespace _5W2H.Application.Models
         public DateTime? CompletedAt { get; private set; }
         public bool IsDeleted { get; private set; }
         
-        public string Description { get; set; }
+        public string Description { get; private set; }
         
         // Somente os IDs das ações
         public List<int> ActionIds { get; private set; }
 
+        public string Origin { get; private set; }
+        public int OriginNumber { get; private set; }
         
+        public string? ConclusionText { get; private set; }
         
         // Método ToEntity para transformar Project em ProjectViewModel
         public static ProjectViewModel ToEntity(Project project)
@@ -33,7 +36,7 @@ namespace _5W2H.Application.Models
             {
                 Id = project.Id,
                 Title = project.Title,
-                ProjectNumber = project.ProjectNumber,
+
                 Status = project.Status,
                 UserId = project.UserId,
                 OriginDate = project.OriginDate,
@@ -43,6 +46,9 @@ namespace _5W2H.Application.Models
                 IsDeleted = project.IsDeleted,
                 Description = project.Description,
                 ActionIds = project.Actions?.Select(a => a.Id).ToList() ?? new List<int>(),
+                Origin = project.Origin,
+                OriginNumber = project.OriginNumber,
+                ConclusionText = project.ConclusionText
             };
         }
     }

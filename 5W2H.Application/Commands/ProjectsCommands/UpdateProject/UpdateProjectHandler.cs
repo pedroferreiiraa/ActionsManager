@@ -24,9 +24,9 @@ public class UpdateProjectHandler : IRequestHandler<UpdateProjectCommand, Result
             return ResultViewModel<Project>.Error("Projeto não encontrado");
         }
         
-        existingProject.Update(request.Title, request.ProjectNumber, request.OriginDate);
+        existingProject.Update(request.Title, request.OriginDate, request.Description, request.Origin, request.OriginNumber);
         
-        await _projectRepository.SaveChangesAsync();
+        await _projectRepository.UpdateAsync(existingProject);
         
         return ResultViewModel<Project>.Success(existingProject);
     }

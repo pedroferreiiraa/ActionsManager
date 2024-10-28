@@ -3,6 +3,7 @@ using _5W2H.Application.Commands.ProjectsCommands.DeleteProject;
 using _5W2H.Application.Commands.ProjectsCommands.InsertProject;
 using _5W2H.Application.Commands.ProjectsCommands.InsertProjectAction;
 using _5W2H.Application.Commands.ProjectsCommands.StartProject;
+using _5W2H.Application.Commands.ProjectsCommands.UpdateConclusionTextProject;
 using _5W2H.Application.Commands.ProjectsCommands.UpdateProject;
 using _5W2H.Application.Queries.ProjectQueries.GetAllProjects;
 using _5W2H.Application.Queries.ProjectQueries.GetProjectById;
@@ -130,6 +131,17 @@ public class ProjectController : ControllerBase
         return Ok(result.Data);  
     }
 
-    
+    [HttpPatch("{id}/conclusion")]
+    public async Task<IActionResult> PatchConclusion(int id, [FromBody] UpdateConclusionTextProjectCommand command)
+    {
+        if (id != command.ProjectId)
+        {
+            return BadRequest("O ID do projeto não corresponde ao fornecido na URL.");
+        }
+
+        await _mediator.Send(command);
+
+        return NoContent();
+    }
     
 }

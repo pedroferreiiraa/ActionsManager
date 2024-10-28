@@ -6,7 +6,7 @@ namespace _5W2H.Application.Models;
 
 public class ActionDetailsViewModel
 {
-    public ActionDetailsViewModel(int id, string title, string what, string why, string when, string where, string who, string how, decimal howMuch, ProjectStatusEnum status, string origin, string originDate, int projectId)
+    public ActionDetailsViewModel(int id, string title, string what, string why, string when, string where, string who, string how, decimal howMuch, ProjectStatusEnum status, int projectId)
     {
         Id = id;
         Title = title;
@@ -18,8 +18,6 @@ public class ActionDetailsViewModel
         How = how;
         HowMuch = howMuch;
         Status = status;
-        Origin = origin;
-        OriginDate = originDate;
         ProjectId = projectId;
     }
 
@@ -39,5 +37,5 @@ public class ActionDetailsViewModel
     public int ProjectId { get; private set; }
     
     public static ActionDetailsViewModel FromEntity(Acao acao) 
-        => new (acao.Id, acao.Title, acao.What, acao.Why, acao.When, acao.Where, acao.Who, acao.How, acao.HowMuch, acao.Status, acao.Origin, acao.OriginDate, acao.ProjectId);
+        => new (acao.Id, acao.Title, acao.What, acao.Why, acao.When, acao.Where, acao.Who, acao.How, acao.HowMuch, acao.Status, acao.ProjectId);
 }

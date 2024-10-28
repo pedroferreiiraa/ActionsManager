@@ -6,7 +6,11 @@ namespace _5W2H.Application.Models;
 
 public class ActionViewModel
 {
-    public ActionViewModel(int id, string title, string what, string why, string when, string where, string who, string how, decimal howMuch, ProjectStatusEnum status, int projectId, int userId, bool isDeleted)
+    public ActionViewModel(int id, string title, string what, string why, 
+        string when, string where, string who, string how, decimal howMuch, 
+        ProjectStatusEnum status, int projectId, int userId, bool isDeleted
+        , string conclusionText
+        )
     {
         Id = id;
         Title = title;
@@ -21,6 +25,7 @@ public class ActionViewModel
         ProjectId = projectId;
         UserId = userId;
         IsDeleted = isDeleted;
+        ConclusionText = conclusionText;
     }
 
 
@@ -37,10 +42,9 @@ public class ActionViewModel
     public ProjectStatusEnum Status { get; private set; }
     public int ProjectId { get; private set; }
     public int UserId { get; private set; }
-    
     public bool IsDeleted { get; private set; }
-    
+    public string? ConclusionText { get; private set; }
     
     public static ActionViewModel FromEntity(Acao entity) 
-        => new (entity.Id, entity.Title, entity.What, entity.Why, entity.When, entity.Where, entity.Who, entity.How, entity.HowMuch, entity.Status, entity.ProjectId, entity.UserId, entity.IsDeleted);
+        => new (entity.Id, entity.Title, entity.What, entity.Why, entity.When, entity.Where, entity.Who, entity.How, entity.HowMuch, entity.Status, entity.ProjectId, entity.UserId, entity.IsDeleted, entity.ConclusionText);
 }

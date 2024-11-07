@@ -9,7 +9,7 @@ services:
     environment:
       - ConnectionStrings__DefaultConnection=Server=db;Database=ferramentagestao;User Id=sa;Password=134679As@357;Encrypt=True;TrustServerCertificate=True;
     ports:
-      - "5000:8080"
+      - "192.168.16.194:5000:8080"
     restart: always
 
   db:

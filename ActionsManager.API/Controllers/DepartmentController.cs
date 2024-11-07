@@ -1,6 +1,7 @@
 using _5W2H.Application.Commands.DepartmentCommands.InsertDepartment;
 using _5W2H.Application.Queries.DepartmentQueries.GetAllDepartments;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace _5W2H.Api.Controllers;
@@ -17,6 +18,7 @@ public class DepartmentController : ControllerBase
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> Get()
     {
         var query = new GetAllDepartmentsQuery();

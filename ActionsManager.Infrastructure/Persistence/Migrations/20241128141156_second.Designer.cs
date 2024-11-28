@@ -12,8 +12,8 @@ using _5W2H.Infrastructure.Persistence;
 namespace _5W2H.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(WhoDbContext))]
-    [Migration("20241028134915_PrimeiraMigration")]
-    partial class PrimeiraMigration
+    [Migration("20241128141156_second")]
+    partial class second
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -108,14 +108,24 @@ namespace _5W2H.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("GestorId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<int>("LiderId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GestorId");
+
+                    b.HasIndex("LiderId");
 
                     b.ToTable("Departments");
                 });
@@ -186,7 +196,7 @@ namespace _5W2H.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DepartmentId")
+                    b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -234,6 +244,25 @@ namespace _5W2H.Infrastructure.Persistence.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("_5W2H.Core.Entities.Department", b =>
+                {
+                    b.HasOne("_5W2H.Core.Entities.User", "Gestor")
+                        .WithMany()
+                        .HasForeignKey("GestorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("_5W2H.Core.Entities.User", "Lider")
+                        .WithMany()
+                        .HasForeignKey("LiderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Gestor");
+
+                    b.Navigation("Lider");
+                });
+
             modelBuilder.Entity("_5W2H.Core.Entities.Project", b =>
                 {
                     b.HasOne("_5W2H.Core.Entities.User", null)
@@ -248,8 +277,7 @@ namespace _5W2H.Infrastructure.Persistence.Migrations
                     b.HasOne("_5W2H.Core.Entities.Department", "Department")
                         .WithMany("Users")
                         .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Department");
                 });

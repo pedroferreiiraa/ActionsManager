@@ -33,7 +33,7 @@ public class DepartmentRepository : IDepartmentRepository
         return departments.ToList();
     }
 
-    public async Task Update(Department department)
+    public async Task UpdateAsync(Department department)
     {
         _context.Departments.Update(department);
         await _context.SaveChangesAsync();

@@ -57,41 +57,45 @@ namespace _5W2H.Infrastructure.Persistence
             });
 
             // Configuração de Project
-            builder.Entity<Project>(e =>
-            {
-                e.HasKey(p => p.Id);
+                builder.Entity<Project>(e =>
+                {
+                    e.HasKey(p => p.Id);
 
-                e.HasMany(p => p.Actions)
-                    .WithOne(a => a.Project)
-                    .HasForeignKey(a => a.ProjectId)
-                    .OnDelete(DeleteBehavior.Cascade);
-            });
+                    e.HasMany(p => p.Actions)
+                        .WithOne(a => a.Project)
+                        .HasForeignKey(a => a.ProjectId)
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
 
-            // Configuração de Department
-            builder.Entity<Department>(e =>
-            {
-                e.HasKey(d => d.Id);
+                // Configuração de Department
+                builder.Entity<Department>()
+                .HasOne(d => d.Gestor)
+                .WithMany()
+                .HasForeignKey(d => d.GestorId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-                e.HasMany(d => d.Users)
-                    .WithOne(u => u.Department)
-                    .HasForeignKey(u => u.DepartmentId);
-            });
+            builder.Entity<Department>()
+                .HasOne(d => d.Lider)
+                .WithMany()
+                .HasForeignKey(d => d.LiderId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            // Configuração de Acao
-            builder.Entity<Acao>(e =>
-            {
-                e.HasKey(a => a.Id);
 
-                e.HasOne(a => a.User)
-                    .WithMany(u => u.Actions)
-                    .HasForeignKey(a => a.UserId)
-                    .OnDelete(DeleteBehavior.Restrict);  // Impede exclusão em cascata
+                // Configuração de Acao
+                builder.Entity<Acao>(e =>
+                {
+                    e.HasKey(a => a.Id);
 
-                e.HasOne(a => a.Project) // Relacionamento com Project
-                    .WithMany(p => p.Actions) // Um projeto tem muitas ações
-                    .HasForeignKey(a => a.ProjectId) // Chave estrangeira
-                    .OnDelete(DeleteBehavior.Cascade); // Cascading delete
-            });
+                    e.HasOne(a => a.User)
+                        .WithMany(u => u.Actions)
+                        .HasForeignKey(a => a.UserId)
+                        .OnDelete(DeleteBehavior.Restrict);  // Impede exclusão em cascata
+
+                    e.HasOne(a => a.Project) // Relacionamento com Project
+                        .WithMany(p => p.Actions) // Um projeto tem muitas ações
+                        .HasForeignKey(a => a.ProjectId) // Chave estrangeira
+                        .OnDelete(DeleteBehavior.Cascade); // Cascading delete
+                });
 
             base.OnModelCreating(builder);
         }

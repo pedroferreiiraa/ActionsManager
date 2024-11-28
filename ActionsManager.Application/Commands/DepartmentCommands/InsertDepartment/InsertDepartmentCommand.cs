@@ -7,7 +7,9 @@ namespace _5W2H.Application.Commands.DepartmentCommands.InsertDepartment;
 public class InsertDepartmentCommand : IRequest<ResultViewModel<int>>
 {
     public string Name { get; set; }
+    public int LiderId { get; set;}
+    public int GestorId { get; set;}
     
     public Department ToEntity()
-        => new (Name);
+        => new (Name, LiderId, GestorId);
 }

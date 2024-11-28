@@ -31,7 +31,7 @@ namespace _5W2H.Core.Entities
         
         // Referência ao departamento
         public Department Department { get; set; } 
-        public int DepartmentId { get; set; }
+        public int? DepartmentId { get; set; }
         
 
         public void Update(string fullName, string email, string role, Department department)

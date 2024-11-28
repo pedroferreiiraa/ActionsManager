@@ -1,5 +1,7 @@
 using _5W2H.Application.Commands.DepartmentCommands.InsertDepartment;
+using _5W2H.Application.Commands.DepartmentCommands.UpdateDepartment;
 using _5W2H.Application.Queries.DepartmentQueries.GetAllDepartments;
+using _5W2H.Application.Queries.DepartmentQueries.GetDepartmentById;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -34,4 +36,26 @@ public class DepartmentController : ControllerBase
         var result = await _mediator.Send(command);
         return result.IsSuccess ? Ok(result) : BadRequest(result);
     }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(UpdateDepartmentCommand command)
+    {
+        await _mediator.Send(command);
+        return NoContent();
+    }
+
+[HttpGet("{id}")]
+    public async Task<IActionResult> GetById(int id)
+    {
+        var query = new GetDepartmentByIdQuery(id);
+        var department = await _mediator.Send(query);
+
+        if (department == null )
+        {
+            return NotFound();
+        }
+
+        return Ok(department);
+    }
+
 }

@@ -7,6 +7,8 @@ using _5W2H.Application.Commands.ProjectsCommands.UpdateConclusionTextProject;
 using _5W2H.Application.Commands.ProjectsCommands.UpdateProject;
 using _5W2H.Application.Queries.ProjectQueries.GetAllProjects;
 using _5W2H.Application.Queries.ProjectQueries.GetProjectById;
+using _5W2H.Application.Queries.ProjectQueries.GetProjectsOfUsersDepartment;
+using _5W2H.Application.Queries.ProjectQueries.GetSelfProjectsByUserId;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -142,6 +144,32 @@ public class ProjectController : ControllerBase
         await _mediator.Send(command);
 
         return NoContent();
+    }
+
+    [HttpGet("self/{userId}")]
+    public async Task<IActionResult> GetSelfProject(int userId)
+    {
+        var query = new GetSelfProjectByUserID(userId);
+        var result = await _mediator.Send(query);
+
+        if (result == null ) {
+            return NotFound(result.Message);
+        }
+
+        return Ok(result);
+    }
+
+    [HttpGet("departmentProjects/{leaderId}")]
+    public async Task<IActionResult> GetProjectsDepartment(int leaderId)
+    {
+        var query = new GetProjectsOfUsersDepartmentQuery(leaderId);
+        var result = await _mediator.Send(query);
+
+        if (result == null) 
+        {
+            return NotFound(result.Message);
+        }
+        return Ok(result);
     }
     
 }

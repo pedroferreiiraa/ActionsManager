@@ -26,7 +26,7 @@ public class UpdateUserHandler : IRequestHandler<UpdateUserCommand, ResultViewMo
         }
 
         // Atualizar os dados do usuário
-        existingUser.Update(request.FullName, request.Email, request.Role, request.Department);
+        existingUser.Update(request.FullName, request.Email, request.Role, request.DepartmentId);
 
         // Salvar as mudanças
         await _userRepository.Update(existingUser);

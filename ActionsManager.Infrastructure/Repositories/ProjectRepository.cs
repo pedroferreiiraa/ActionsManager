@@ -91,12 +91,40 @@ public class ProjectRepository : IProjectRepository
             return null;
         }
     
-        existingProject.Start(); // Método para iniciar o projeto
+        existingProject.Start(); 
     
         await _context.SaveChangesAsync();
     
         return existingProject;
     }
 
-    
+    public async Task<List<Project>> GetProjectsByUserId(int userId)
+    {
+        return await _context.Projects
+            .Where(a => a.UserId == userId)
+            .ToListAsync();
+    }
+
+    public async Task<List<Project>> GetAllProjectsOfDepartment(int leaderId)
+{
+    // Encontrar o departamento do líder
+    var leaderDepartment = await _context.Users
+        .Where(u => u.Id == leaderId)
+        .Select(u => u.DepartmentId)
+        .FirstOrDefaultAsync();
+
+    if (leaderDepartment == null)
+        return new List<Project>();
+
+    // Buscar projetos de usuários do mesmo departamento
+    return await _context.Projects
+        .Include(p => p.User) // Incluir informações do usuário
+        .Where(p => p.User.DepartmentId == leaderDepartment && !p.IsDeleted)
+        .ToListAsync();
+}
+
+    // public Task<List<Project>> GetAllProjectsOfDepartment(int leaderId)
+    // {
+    //     throw new NotImplementedException();
+    // }
 }

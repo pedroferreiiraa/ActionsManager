@@ -11,12 +11,9 @@ public class InsertUserCommand : IRequest<int>
     public string Password { get; set; }
     public string Email { get; set; }
     public string Role { get; set; }
-    public int? DepartmentId { get; set; }
+    public int DepartmentId { get; set; }
 
     public User ToEntity(string passwordHash)
-        => new User(FullName, Email, passwordHash, Role, null)
-        {
-            DepartmentId = DepartmentId 
-        };
-
+        => new User(FullName, Email, passwordHash, Role, DepartmentId);
+     
 }

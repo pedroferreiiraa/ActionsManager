@@ -29,7 +29,7 @@ public class DepartmentRepository : IDepartmentRepository
 
     public async Task<List<Department>> GetAllAsync()
     {
-        var departments = await _context.Departments.ToListAsync();
+        var departments = await _context.Departments.Include(dp => dp.Users).ToListAsync();
         return departments.ToList();
     }
 

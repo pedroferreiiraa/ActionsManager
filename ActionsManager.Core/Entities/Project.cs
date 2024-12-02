@@ -32,6 +32,8 @@ public class Project : BaseEntity
     public string Origin { get; private set; }
     public int OriginNumber { get; private set; }
     
+    public User User { get; private set;}
+    
     public string? ConclusionText { get; private set; }
     public virtual List<Acao> Actions { get; set; } 
     public IEnumerable<int> ActionIds => Actions.Select(a => a.Id);

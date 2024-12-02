@@ -12,7 +12,9 @@ public interface IProjectRepository
     Task UpdateAsync(Project project);
     Task<int> DeleteAsync(int id);
     Task<Project> GetByIdWithActionsAsync(int id);
-    
+    Task<List<Project>> GetProjectsByUserId(int userId);
+    // Task<List<Project>> GetAllProjectsOfDepartment(int leaderId);
+    Task<List<Project>> GetAllProjectsOfDepartment(int leaderId);
     Task SaveChangesAsync();
     
     IQueryable<Project> Query();

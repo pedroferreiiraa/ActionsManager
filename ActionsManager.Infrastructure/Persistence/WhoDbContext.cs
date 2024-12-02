@@ -59,14 +59,18 @@ namespace _5W2H.Infrastructure.Persistence
             // Configuração de Project
                 builder.Entity<Project>(e =>
                 {
+                    e.HasOne(p => p.User)
+                    .WithMany(u => u.Projects)
+                    .HasForeignKey(p => p.UserId);
+
                     e.HasKey(p => p.Id);
 
                     e.HasMany(p => p.Actions)
-                        .WithOne(a => a.Project)
-                        .HasForeignKey(a => a.ProjectId)
-                        .OnDelete(DeleteBehavior.Cascade);
+                    .WithOne(a => a.Project)
+                    .HasForeignKey(a => a.ProjectId)
+                    .OnDelete(DeleteBehavior.Cascade);
                 });
-
+                
                 // Configuração de Department
                 builder.Entity<Department>()
                 .HasOne(d => d.Gestor)

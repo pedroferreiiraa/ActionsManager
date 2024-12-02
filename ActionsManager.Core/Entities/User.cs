@@ -8,13 +8,13 @@ namespace _5W2H.Core.Entities
         
         public User() { }
         
-        public User(string fullName, string email, string password, string role, Department department)
+        public User(string fullName, string email, string password, string role, int departmentId)
         {
             FullName = fullName;
             Email = email;
             Password = password;
             Role = role;
-            Department = department; // Agora é uma referência a um objeto Department
+            DepartmentId = departmentId; // Agora é uma referência a um objeto Department
 
             Projects = new List<Project>();
             Actions = new List<Acao>();
@@ -25,7 +25,7 @@ namespace _5W2H.Core.Entities
         public string Password { get; private set; }
         public string Role { get; private set; }
         
-        public List<Project> Projects { get; set; } 
+        public ICollection<Project> Projects { get; set; } 
         
         public List<Acao> Actions { get; set; }
         
@@ -34,12 +34,12 @@ namespace _5W2H.Core.Entities
         public int? DepartmentId { get; set; }
         
 
-        public void Update(string fullName, string email, string role, Department department)
+        public void Update(string fullName, string email, string role, int departmentId)
         {
             FullName = fullName;
             Email = email;
             Role = role;
-            Department = department; // Atualiza para um novo objeto Department
+            DepartmentId = departmentId; // Atualiza para um novo objeto Department
         }
     }
 }

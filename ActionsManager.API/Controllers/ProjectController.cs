@@ -160,16 +160,29 @@ public class ProjectController : ControllerBase
     }
 
     [HttpGet("departmentProjects/{leaderId}")]
-    public async Task<IActionResult> GetProjectsDepartment(int leaderId)
+    public async Task<IActionResult> GetProjectsDepartment(int leaderId, string search = "", int pageNumber = 1, int pageSize = 10, int status = -1)
     {
-        var query = new GetProjectsOfUsersDepartmentQuery(leaderId);
+        // Incluindo o status na chamada do construtor
+        var query = new GetProjectsOfUsersDepartmentQuery(leaderId, search, pageNumber, pageSize, status);
         var result = await _mediator.Send(query);
 
-        if (result == null) 
+        if (result.IsSuccess)
         {
-            return NotFound(result.Message);
+            return Ok(new
+            {
+                data = result.Data.Items, // Lista de projetos
+                totalItems = result.Data.TotalItems, // Total de projetos encontrados
+                totalPages = result.Data.TotalPages, // Número total de páginas
+                pageNumber = result.Data.PageNumber, // Página atual
+                pageSize = result.Data.PageSize // Tamanho da página
+            });
         }
-        return Ok(result);
+        else
+        {
+            return BadRequest(result.Message);
+        }
     }
+
+
     
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using _5W2H.Application.Models;
 using _5W2H.Application.Queries.ProjectQueries.GetAllProjects;
 using _5W2H.Core.Entities;
+using _5W2H.Core.Enums;
 using _5W2H.Core.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -26,14 +27,21 @@ namespace _5W2H.Application.Queries.ProjectQueries.GetProjectsOfUsersDepartment
             // Buscar projetos dos colaboradores do departamento do líder
             IQueryable<Project> projectsQuery = _repository.Query()
                 .Include(p => p.User) // Inclui informações do usuário
-                .Where(p => p.User.DepartmentId == request.LeaderId); // Filtro pelo departamento do líder
+                .Where(p => p.User.DepartmentId == request.DepartmentId); // Filtro pelo departamento do líder
+
+             if (request.Status >= 0)
+            {
+                var projectStatus = (ProjectStatusEnum)request.Status;
+                projectsQuery = projectsQuery.Where(p => p.Status == projectStatus);
+            }
 
             // Filtro adicional pelo termo de pesquisa, se fornecido
             if (!string.IsNullOrWhiteSpace(request.Search))
             {
                 projectsQuery = projectsQuery.Where(p => 
                     EF.Functions.Like(p.Title, $"%{request.Search}%") || // Nome do projeto
-                    EF.Functions.Like(p.Description, $"%{request.Search}%")); // Descrição do projeto
+                    EF.Functions.Like(p.Description, $"%{request.Search}%"));
+                projectsQuery = projectsQuery.OrderByDescending(p => p.CreatedAt);    
             }
 
             // Ordenar por data de criação

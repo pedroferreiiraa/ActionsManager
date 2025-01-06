@@ -8,7 +8,7 @@ namespace _5W2H.Core.Entities
         
         public User() { }
         
-        public User(string fullName, string email, string password, string role, int departmentId)
+        public User(string fullName, string email, string password, string role, int? departmentId)
         {
             FullName = fullName;
             Email = email;

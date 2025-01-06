@@ -1,4 +1,5 @@
 version: '3.8'
+
 services:
   api:
     build:
@@ -7,22 +8,22 @@ services:
     depends_on:
       - db
     environment:
-      - ConnectionStrings__DefaultConnection=Server=db;Database=ferramentagestao;User Id=sa;Password=134679As@357;Encrypt=True;TrustServerCertificate=True;
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=amtests;Username=user;Password=135798As@357;
     ports:
       - "5002:8080"
     restart: always
 
   db:
-    image: mcr.microsoft.com/mssql/server:2019-latest
+    image: postgres:17
     environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=134679As@357
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: 135798As@357
+      POSTGRES_DB: amtests
     ports:
-      - "1435:1433"
+      - "5432:5432"
     volumes:
-      - db_data:/var/opt/mssql
+      - postgres_data:/var/lib/postgresql/data
     restart: always
 
 volumes:
-  db_data:
-    
+  postgres_data:

@@ -4,7 +4,7 @@ public abstract class BaseEntity
 {
     protected BaseEntity()
     {
-        CreatedAt = DateTime.Now;
+        CreatedAt = DateTime.UtcNow;
         IsDeleted = false;
     }
 

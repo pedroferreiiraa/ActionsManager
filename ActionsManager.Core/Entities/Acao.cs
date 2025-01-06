@@ -57,7 +57,7 @@ public class Acao : BaseEntity
         if (Status == ProjectStatusEnum.Created)
         {
             Status = ProjectStatusEnum.InProgress;
-            StartedAt = DateTime.Now;
+            StartedAt = DateTime.UtcNow;
         }
     }
 
@@ -66,7 +66,7 @@ public class Acao : BaseEntity
         if (Status == ProjectStatusEnum.InProgress)
         {
             Status = ProjectStatusEnum.Completed;
-            CompletedAt = DateTime.Now;
+            CompletedAt = DateTime.UtcNow;
         }
     }
     

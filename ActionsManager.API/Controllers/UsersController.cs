@@ -1,6 +1,7 @@
 using _5W2H.Application.Commands.UserCommands.DeleteUser;
 using _5W2H.Application.Commands.UserCommands.InsertUser;
 using _5W2H.Application.Commands.UserCommands.LoginUser;
+using _5W2H.Application.Commands.UserCommands.UpdatePassword;
 using _5W2H.Application.Commands.UserCommands.UpdateUser;
 using _5W2H.Application.Queries.UsersQueries.GetAllUsers;
 using _5W2H.Application.Queries.UsersQueries.GetUserById;
@@ -96,5 +97,17 @@ public class UsersController : ControllerBase
         return Ok(loginUserViewModel);
     }
     
+
+    [HttpPut("change-password")]
+    public async Task<IActionResult> ChangePassword([FromBody] UpdatePasswordCommand command)
+    {
+        var result = await _mediator.Send(command);
+        if (result)
+        {
+            return Ok("Senha alterada com sucesso.");
+        }
+
+        return BadRequest("Não foi possível alterar a senha.");
+    }
     
 }

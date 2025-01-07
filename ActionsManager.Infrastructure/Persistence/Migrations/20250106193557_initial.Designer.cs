@@ -12,7 +12,7 @@ using _5W2H.Infrastructure.Persistence;
 namespace _5W2H.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(WhoDbContext))]
-    [Migration("20250106163250_initial")]
+    [Migration("20250106193557_initial")]
     partial class initial
     {
         /// <inheritdoc />

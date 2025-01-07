@@ -22,7 +22,7 @@ namespace _5W2H.Core.Entities
 
         public string FullName { get; private set; }
         public string Email { get; private set; }
-        public string Password { get; private set; }
+        public string Password { get;  set; }
         public string Role { get; private set; }
         
         public ICollection<Project> Projects { get; set; } 
@@ -32,7 +32,7 @@ namespace _5W2H.Core.Entities
         // Referência ao departamento
         public Department Department { get; set; } 
         public int? DepartmentId { get; set; }
-        
+
 
         public void Update(string fullName, string email, string role, int departmentId)
         {
@@ -40,6 +40,11 @@ namespace _5W2H.Core.Entities
             Email = email;
             Role = role;
             DepartmentId = departmentId; // Atualiza para um novo objeto Department
+        }
+
+        public void UpdatePassword(string password)
+        {
+            Password = password;
         }
     }
 }

@@ -159,11 +159,10 @@ public class ProjectController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("departmentProjects/{leaderId}")]
-    public async Task<IActionResult> GetProjectsDepartment(int leaderId, string search = "", int pageNumber = 1, int pageSize = 10, int status = -1)
+    [HttpGet("departments/{departmentId}")]
+    public async Task<IActionResult> GetProjectsByDepartment(int departmentId, string search = "", int pageNumber = 1, int pageSize = 10, int status = -1)
     {
-        // Incluindo o status na chamada do construtor
-        var query = new GetProjectsOfUsersDepartmentQuery(leaderId, search, pageNumber, pageSize, status);
+        var query = new GetDepartmentProjectsQuery(departmentId, search, pageNumber, pageSize, status);
         var result = await _mediator.Send(query);
 
         if (result.IsSuccess)

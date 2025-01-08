@@ -26,5 +26,6 @@
 
 # Ignorar arquivos e diretórios específicos
 .idea/
-appsettings.json
+appsettings
 appsettings.Development.json
+appsettings.json

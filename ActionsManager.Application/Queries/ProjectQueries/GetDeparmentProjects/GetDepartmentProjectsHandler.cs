@@ -5,38 +5,49 @@ using System.Threading.Tasks;
 using _5W2H.Application.Models;
 using _5W2H.Application.Queries.ProjectQueries.GetAllProjects;
 using _5W2H.Core.Entities;
+using _5W2H.Core.Enums;
 using _5W2H.Core.Repositories;
+using _5W2H.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace _5W2H.Application.Queries.ProjectQueries.GetProjectsOfUsersDepartment
 {
-    public class GetProjectsOfUsersDepartmentHandler : IRequestHandler<GetProjectsOfUsersDepartmentQuery, ResultViewModel<PaginatedList<ProjectViewModel>>>
+    public class GetDepartmentProjectsHandler : IRequestHandler<GetDepartmentProjectsQuery,
+        ResultViewModel<PaginatedList<ProjectViewModel>>>
     {
         private readonly IProjectRepository _repository;
 
-        public GetProjectsOfUsersDepartmentHandler(IProjectRepository repository)
+
+        public GetDepartmentProjectsHandler(IProjectRepository repository)
         {
             _repository = repository;
         }
 
 
-        public async Task<ResultViewModel<PaginatedList<ProjectViewModel>>> Handle(GetProjectsOfUsersDepartmentQuery request, CancellationToken cancellationToken)
+        public async Task<ResultViewModel<PaginatedList<ProjectViewModel>>> Handle(GetDepartmentProjectsQuery request,
+            CancellationToken cancellationToken)
         {
-            // Buscar projetos dos colaboradores do departamento do líder
+            // Buscar projetos dos colaboradores do departamento específico
             IQueryable<Project> projectsQuery = _repository.Query()
-                .Include(p => p.User) // Inclui informações do usuário
-                .Where(p => p.User.DepartmentId == request.LeaderId); // Filtro pelo departamento do líder
+                .Include(p => p.Actions)
+                .Include(p => p.User) // Incluir informações do usuário
+                .Where(p => p.User.DepartmentId == request.DepartmentId && !p.IsDeleted); // Filtra pelo DepartmentId
 
-            // Filtro adicional pelo termo de pesquisa, se fornecido
-            if (!string.IsNullOrWhiteSpace(request.Search))
+            // Filtro por status, se fornecido
+            if (request.Status >= 0)
             {
-                projectsQuery = projectsQuery.Where(p => 
-                    EF.Functions.Like(p.Title, $"%{request.Search}%") || // Nome do projeto
-                    EF.Functions.Like(p.Description, $"%{request.Search}%")); // Descrição do projeto
+                var projectStatus = (ProjectStatusEnum)request.Status;
+                projectsQuery = projectsQuery.Where(p => p.Status == projectStatus);
             }
 
-            // Ordenar por data de criação
+            // Filtro por termo de pesquisa, se fornecido
+            if (!string.IsNullOrEmpty(request.Search))
+            {
+                projectsQuery = projectsQuery.Where(p => p.Title.Contains(request.Search));
+            }
+
+            // Ordenar por data de criação (do mais recente para o mais antigo)
             projectsQuery = projectsQuery.OrderByDescending(p => p.CreatedAt);
 
             // Contar o total de itens para paginação
@@ -51,7 +62,8 @@ namespace _5W2H.Application.Queries.ProjectQueries.GetProjectsOfUsersDepartment
             // Se não houver projetos, retornar erro
             if (!paginatedProjects.Any())
             {
-                return ResultViewModel<PaginatedList<ProjectViewModel>>.Error("Nenhum projeto encontrado neste departamento.");
+                return ResultViewModel<PaginatedList<ProjectViewModel>>.Error(
+                    "Nenhum projeto encontrado neste departamento.");
             }
 
             // Mapear para o ViewModel
@@ -64,6 +76,5 @@ namespace _5W2H.Application.Queries.ProjectQueries.GetProjectsOfUsersDepartment
                 new PaginatedList<ProjectViewModel>(projectViewModels, totalItems, request.PageNumber, request.PageSize)
             );
         }
-
     }
 }

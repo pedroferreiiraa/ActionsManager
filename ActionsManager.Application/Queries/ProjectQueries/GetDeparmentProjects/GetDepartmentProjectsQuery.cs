@@ -5,19 +5,19 @@ using MediatR;
 
 namespace _5W2H.Application.Queries.ProjectQueries.GetProjectsOfUsersDepartment
 {
-    public class GetProjectsOfUsersDepartmentQuery : IRequest<ResultViewModel<PaginatedList<ProjectViewModel>>>
+    public class GetDepartmentProjectsQuery : IRequest<ResultViewModel<PaginatedList<ProjectViewModel>>>
     {
-        public GetProjectsOfUsersDepartmentQuery(int leaderId, string search, int pageNumber, int pageSize, int status)
+        public GetDepartmentProjectsQuery(int deparmentId, string search, int pageNumber, int pageSize, int status)
         {
-            LeaderId = leaderId;
+            DepartmentId = deparmentId;
             Search = search;
             PageNumber = pageNumber;
             PageSize = pageSize;
             Status = status;
         }
 
-        public int LeaderId { get; set;}
-         public string Search { get; set; }
+        public int DepartmentId { get; set;}
+        public string Search { get; set; }
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
         

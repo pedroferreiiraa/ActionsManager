@@ -34,10 +34,9 @@ namespace _5W2H.Core.Entities
         public int? DepartmentId { get; set; }
 
 
-        public void Update(string fullName, string email, string role, int departmentId)
+        public void Update(string fullName,  string role, int departmentId)
         {
             FullName = fullName;
-            Email = email;
             Role = role;
             DepartmentId = departmentId; // Atualiza para um novo objeto Department
         }
